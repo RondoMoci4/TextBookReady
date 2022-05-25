@@ -1,0 +1,214 @@
+﻿<Page x:Class="TextBook.Pages.AddContentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:TextBook.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="650"
+      Title="Добавление контента"
+      x:Name="pageContent">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Button Style="{DynamicResource btnEnter}"
+                    x:Name="btnDeleteTheme"
+                    Click="btnDeleteTheme_Click"
+                    IsEnabled="False">
+                <materialDesign:PackIcon Kind="Delete"
+                                         Width="40"
+                                         Height="40"/>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                        Удалить тему
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Style="{DynamicResource btnEnter}"
+                x:Name="btnLoadTheme"
+                Click="btnLoadTheme_Click"
+                    Margin="10,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Pen"
+                                         Width="40"
+                                         Height="40"
+                                         VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                        Загрузить тему
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Style="{DynamicResource btnEnter}"
+                x:Name="btnSaveTheme"
+                Click="btnSaveTheme_Click"
+                Margin="10,0,0,0"
+                    IsEnabled="False">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ContentSave"
+                                         Width="40"
+                                         Height="40"
+                                         VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                        Сохранить тему
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Style="{DynamicResource btnEnter}"
+                x:Name="btnBindTest"
+                Click="btnBindTest_Click"
+                    IsEnabled="False"
+                   Margin="10,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Link"
+                                         Width="40"
+                                         Height="40"
+                                         VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                        Привязать тест
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
+        
+        <RichTextBox Style="{DynamicResource rtbStyle}" Grid.Row="0"
+                     Margin="10"
+                     BorderThickness="1"
+                     BorderBrush="{DynamicResource AdditionalColor}"
+                     Background="White"
+                     Foreground="Black"
+                     x:Name="rtbTheme"
+                     Grid.ColumnSpan="2"
+                     GotFocus="prgTitleTheme_GotFocus"
+                     LostFocus="prgTitleTheme_LostFocus">
+            <FlowDocument>
+                <Paragraph x:Name="prgTitleTheme"
+                           TextAlignment="Center"
+                           FontSize="18"
+                           Foreground="{DynamicResource AdditionalColor}"/>
+                <Paragraph x:Name="prgTextTheme"
+                           TextIndent="50"
+                           TextAlignment="Justify"/>
+            </FlowDocument>
+        </RichTextBox>
+
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="300" Width="350" MaxWidth="{Binding ElementName=pageContent,Path=ActualWidth}"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <RichTextBox Style="{DynamicResource rtbStyle}" Grid.Row="1"
+                     Margin="10"
+                     BorderThickness="1"
+                     BorderBrush="{DynamicResource AdditionalColor}"
+                     Background="{DynamicResource MainColor}"
+                     Foreground="{DynamicResource AdditionalColor}"
+                     x:Name="rtbDescriptionTheme">
+                <FlowDocument>
+                    <Paragraph TextAlignment="Left"
+                           FontSize="18"
+                           TextDecorations="Underline"
+                               Foreground="{DynamicResource AdditionalColor}">Описание (необязательное)</Paragraph>
+                    <Paragraph x:Name="prgDescriptionTheme"
+                           TextIndent="30"
+                               FontSize="16"
+                           TextAlignment="Justify"/>
+                </FlowDocument>
+            </RichTextBox>
+            <GridSplitter Style="{DynamicResource GridSplitterStyle}" Grid.Column="1" ShowsPreview="False" Width="3"
+        HorizontalAlignment="Center"
+                          Background="{DynamicResource AdditionalColor}"/>
+
+            <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                     Grid.Column="2"
+                        x:Name="oneTwo">
+                <Border Width="0"
+                        Height="{Binding ElementName=oneTwo,Path=ActualHeight}"
+                        x:Name="brdListTest">
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               Foreground="{DynamicResource MainColor}"
+                               TextDecorations="Underline"
+                               FontSize="18"
+                               Margin="20,5,0,0">Список тестов</TextBlock>
+                        <Grid Margin="10,30,0,0">
+                            <ListBox Background="{DynamicResource AdditionalColor}"
+                             BorderThickness="0"
+                             x:Name="lbListTest" MouseDoubleClick="lbListTest_MouseDoubleClick">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border CornerRadius="5"
+                                        BorderThickness="1"
+                                        BorderBrush="{DynamicResource MainColor}">
+                                            <TextBlock Foreground="{DynamicResource MainColor}"
+                                                   Text="{Binding Title}"
+                                                   FontSize="16"
+                                                   Margin="5"></TextBlock>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock x:Name="txbTestListBox"
+                                   Visibility="Hidden"
+                                   Text="{Binding ElementName=lbListTest,Path=SelectedItem.IdTest}"/>
+                        </Grid>
+                    </Grid>
+                    
+                 
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Background" Value="{StaticResource AdditionalColor}"/>
+                            <Setter Property="CornerRadius" Value="0,10,10,0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </Border.Style>
+                </Border>
+                <Button Style="{DynamicResource btnEnter}"
+                x:Name="btnListTest"
+                Click="btnListTest_Click"
+                    IsEnabled="False"
+                    Width="40"
+                    Height="40"
+                   >
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ArrowRight"
+                                         Width="40"
+                                         Height="40"
+                                         VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button.ToolTip>
+                        <ToolTip Style="{DynamicResource tltpElement}">
+                            Список тестов
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+        
+    </Grid>
+</Page>

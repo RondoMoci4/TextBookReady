@@ -1,0 +1,317 @@
+﻿<Page x:Class="TextBook.Pages.CreateTestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:TextBook.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="650"
+      Title="Конструктор теста">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Margin="20,20,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Top" 
+                       FontSize="26"
+                       Style="{DynamicResource txbEnter}"
+                       TextDecorations="Underline">Параметры теста</TextBlock>
+                <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="22"
+                           Margin="10,10,0,0"
+                           Height="35"
+                           HorizontalAlignment="Right">Наименование теста:</TextBlock>
+                <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="22"
+                           Margin="10,10,0,0"
+                           Height="35"
+                           HorizontalAlignment="Right">Время прохождения:</TextBlock>
+                <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="22"
+                           Margin="10,10,0,0"
+                           Height="35"
+                           HorizontalAlignment="Right">Количество вопросов:</TextBlock>
+                <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="22"
+                           Margin="10,10,0,0"
+                           Height="35"
+                           HorizontalAlignment="Right">Разработчик теста:</TextBlock>
+            </StackPanel>
+
+            <StackPanel Margin="20,65,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <TextBox Style="{DynamicResource txbModernStyle}"
+                         HorizontalContentAlignment="Center"
+                         FontSize="18"
+                         MaxWidth="500"
+                         x:Name="txbTitleTest"></TextBox>
+                <UserControl>
+                    <Grid>
+                        <TextBox Style="{DynamicResource txbModernStyle}"
+                         Margin="0,10,0,0"
+                         HorizontalContentAlignment="Center"
+                         FontSize="18"
+                         IsReadOnly="True"
+                                 x:Name="txbTime">00:00:00</TextBox>
+                        <StackPanel HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,-80,0"
+                                    Orientation="Horizontal">
+                            <Button Style="{DynamicResource btnEnter}"
+                                    x:Name="btnUpTime"
+                                    Click="btnUpTime_Click">
+                                <materialDesign:PackIcon Kind="ArrowUp"
+                                                         Width="20"/>
+                                <Button.ToolTip>
+                                    <ToolTip Style="{DynamicResource tltpElement}">Увеличить время</ToolTip>
+                                </Button.ToolTip>
+                            </Button>
+                            <Button Style="{DynamicResource btnEnter}"
+                                    Margin="5,0,0,0"
+                                    x:Name="btnDownTime"
+                                    Click="btnDownTime_Click">
+                                <materialDesign:PackIcon Kind="ArrowDown"
+                                                         Width="20"/>
+                                <Button.ToolTip>
+                                    <ToolTip Style="{DynamicResource tltpElement}">Уменьшить время</ToolTip>
+                                </Button.ToolTip>
+                            </Button>
+                            <ComboBox Margin="15,0,0,0"
+                                      Style="{DynamicResource ComboBoxFlatStyle}"
+                                      SelectedItem="0"
+                                      Width="70"
+                                      x:Name="cmbUnitTime">
+                                <ComboBoxItem>сек.</ComboBoxItem>
+                                <ComboBoxItem>мин.</ComboBoxItem>
+                                <ComboBoxItem>час.</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                </UserControl>
+                <TextBox Style="{DynamicResource txbModernStyle}"
+                         Margin="0,10,0,0"
+                         HorizontalContentAlignment="Center"
+                         FontSize="18"
+                         IsReadOnly="True"
+                         x:Name="txbCountQuestion">0</TextBox>
+                <TextBox Style="{DynamicResource txbModernStyle}"
+                         Margin="0,10,0,0"
+                         HorizontalContentAlignment="Center"
+                         FontSize="18"
+                         IsReadOnly="True"
+                         x:Name="txbTestCreator"></TextBox>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock Style="{DynamicResource txbEnter}"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Margin="20,0,0,0"
+                    x:Name="stackPanelOne">
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Top" 
+                       FontSize="26"
+                       Style="{DynamicResource txbEnter}"
+                       TextDecorations="Underline"
+                       Margin="0,10,0,0">Создание вопросов теста</TextBlock>
+
+            <StackPanel VerticalAlignment="Center"
+                        Margin="0,20,0,0"
+                        Orientation="Horizontal">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="20">Текст вопроса:</TextBlock>
+                        <TextBox Style="{DynamicResource txbModernStyle}"
+                             Margin="10,0,0,0"
+                             x:Name="txbQuestion"
+                             FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                        <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="20">Вариант ответа №1:</TextBlock>
+                        <TextBox Style="{DynamicResource txbModernStyle}"
+                             Margin="10,0,0,0"
+                             x:Name="txbAnswerOne"
+                             FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                        <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="20">Вариант ответа №2:</TextBlock>
+                        <TextBox Style="{DynamicResource txbModernStyle}"
+                             Margin="10,0,0,0"
+                             x:Name="txbAnswerTwo"
+                             FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                        <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="20">Вариант ответа №3:</TextBlock>
+                        <TextBox Style="{DynamicResource txbModernStyle}"
+                             Margin="10,0,0,0"
+                             x:Name="txbAnswerThree"
+                             FontSize="18"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                        <TextBlock Style="{DynamicResource txbEnter}"
+                           FontSize="20">Вариант ответа №4:</TextBlock>
+                        <TextBox Style="{DynamicResource txbModernStyle}"
+                             Margin="10,0,0,0"
+                             x:Name="txbAnswerFour"
+                             FontSize="18"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Bottom"
+                            Margin="10,0,0,10">
+                    <RadioButton Style="{DynamicResource rbStyle}"
+                                 Margin="0,0,0,0"
+                                 GroupName="answerRB"
+                                 x:Name="rbOneAnswer" 
+                                 Checked="rbAllChecked"/>
+                    <RadioButton Style="{DynamicResource rbStyle}"
+                                 Margin="0,20,0,0"
+                                 GroupName="answerRB"
+                                 x:Name="rbTwoAnswer"
+                                 Checked="rbAllChecked"/>
+                    <RadioButton Style="{DynamicResource rbStyle}"
+                                 Margin="0,20,0,0"
+                                 GroupName="answerRB"
+                                 x:Name="rbThreeAnswer"
+                                 Checked="rbAllChecked"/>
+                    <RadioButton Style="{DynamicResource rbStyle}"
+                                 Margin="0,20,0,0"
+                                 GroupName="answerRB"
+                                 x:Name="rbFourAnswer"
+                                 Checked="rbAllChecked"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right"
+                    Grid.Row="1"
+                    Orientation="Horizontal">
+            <Button Style="{DynamicResource btnInfoTest}"
+                    Width="40"
+                    Height="40"
+                    x:Name="btnQuestionInfo"
+                    Click="btnQuestionInfo_Click"
+                    VerticalAlignment="Center">
+                <materialDesign:PackIcon Kind="Backburger"
+                                         Width="25"
+                                         Height="25">
+                </materialDesign:PackIcon>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                       Список вопросов 
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Border Style="{DynamicResource brdInfoTest}"
+                    Width="0"
+                    Height="{Binding ElementName=stackPanelOne, Path=ActualHeight}"
+                    x:Name="brdInfoQuestion">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               Foreground="{DynamicResource MainColor}"
+                               TextDecorations="Underline"
+                               FontSize="18"
+                               Margin="20,5,0,0">Список вопросов</TextBlock>
+                    <Grid Margin="10,30,10,30">
+                        <ListBox Background="{DynamicResource AdditionalColor}"
+                             BorderThickness="0"
+                             x:Name="lbListQuestion" MouseDoubleClick="lbListQuestion_MouseDoubleClick">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="5"
+                                        BorderThickness="1"
+                                        BorderBrush="{DynamicResource MainColor}">
+                                        <TextBlock Foreground="{DynamicResource MainColor}"
+                                                   Text="{Binding TitleQuestion}"
+                                                   FontSize="16"
+                                                   Margin="5"></TextBlock>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <TextBlock x:Name="txbQuestionListBox"
+                                   Visibility="Hidden"
+                                   Text="{Binding ElementName=lbListQuestion,Path=SelectedItem.IdQuestion}"/>
+                        
+                    </Grid>
+                </Grid>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+            <Button Style="{DynamicResource btnEnter}"
+                    x:Name="btnDeleteQuestion"
+                    Click="btnDeleteQuestion_Click"
+                    IsEnabled="False">
+                <materialDesign:PackIcon Kind="Delete"
+                                         Width="40"
+                                         Height="40"/>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                        Удалить вопрос
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Style="{DynamicResource btnEnter}"
+                    Margin="10,0,0,0"
+                    x:Name="btnUpdateQuestion"
+                    Click="btnUpdateQuestion_Click"
+                    IsEnabled="False">
+                <materialDesign:PackIcon Kind="Update"
+                                         Width="40"
+                                         Height="40"/>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                        Сохранить изменения
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Style="{DynamicResource btnEnter}"
+                    Margin="10,0,0,0"
+                    x:Name="btnResetQuestion"
+                    Click="btnResetQuestion_Click"
+                    IsEnabled="False">
+                <materialDesign:PackIcon Kind="ClearBox"
+                                         Width="40"
+                                         Height="40"/>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                        Сбросить вопрос
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Style="{DynamicResource btnEnter}"
+                    Margin="10,0,0,0"
+                    x:Name="btnAddQuestion"
+                    Click="btnAddQuestion_Click">
+                <materialDesign:PackIcon Kind="Add"
+                                         Width="40"
+                                         Height="40"/>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">
+                        Добавить вопрос
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            
+        </StackPanel>
+    </Grid>
+</Page>

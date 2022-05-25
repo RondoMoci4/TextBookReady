@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище DBTextBookModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Autorization">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="IdTest" />
+          </Key>
+          <Property Name="IdTest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="CountQuestion" Type="int" Nullable="false" />
+          <Property Name="CreatorTest" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TestAnswer">
+          <Key>
+            <PropertyRef Name="IdAnswer" />
+          </Key>
+          <Property Name="IdAnswer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdQuestion" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Correct" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestQuestion">
+          <Key>
+            <PropertyRef Name="IdQuestion" />
+          </Key>
+          <Property Name="IdQuestion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTest" Type="int" Nullable="false" />
+          <Property Name="TitleQuestion" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestResult">
+          <Key>
+            <PropertyRef Name="IdResult" />
+          </Key>
+          <Property Name="IdResult" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTest" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="CorrectAnswers" Type="int" Nullable="false" />
+          <Property Name="DateOfPassage" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Theme">
+          <Key>
+            <PropertyRef Name="idTheme" />
+          </Key>
+          <Property Name="idTheme" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TextTheme" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="TopicTest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Test" Type="int" Nullable="false" />
+          <Property Name="Theme" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Test_Autorization">
+          <End Role="Autorization" Type="Self.Autorization" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autorization">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="CreatorTest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestAnswer_TestQuestion">
+          <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="1" />
+          <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestQuestion">
+              <PropertyRef Name="IdQuestion" />
+            </Principal>
+            <Dependent Role="TestAnswer">
+              <PropertyRef Name="IdQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestQuestion_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="IdTest" />
+            </Principal>
+            <Dependent Role="TestQuestion">
+              <PropertyRef Name="IdTest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestResult_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="TestResult" Type="Self.TestResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="IdTest" />
+            </Principal>
+            <Dependent Role="TestResult">
+              <PropertyRef Name="IdTest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicTest_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="TopicTest" Type="Self.TopicTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="IdTest" />
+            </Principal>
+            <Dependent Role="TopicTest">
+              <PropertyRef Name="Test" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicTest_Theme">
+          <End Role="Theme" Type="Self.Theme" Multiplicity="1" />
+          <End Role="TopicTest" Type="Self.TopicTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="idTheme" />
+            </Principal>
+            <Dependent Role="TopicTest">
+              <PropertyRef Name="Theme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DBTextBookModelContainer">
+          <EntitySet Name="Autorization" EntityType="Self.Autorization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestAnswer" EntityType="Self.TestAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestQuestion" EntityType="Self.TestQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestResult" EntityType="Self.TestResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Theme" EntityType="Self.Theme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TopicTest" EntityType="Self.TopicTest" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Test_Autorization" Association="Self.FK_Test_Autorization">
+            <End Role="Autorization" EntitySet="Autorization" />
+            <End Role="Test" EntitySet="Test" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestAnswer_TestQuestion" Association="Self.FK_TestAnswer_TestQuestion">
+            <End Role="TestQuestion" EntitySet="TestQuestion" />
+            <End Role="TestAnswer" EntitySet="TestAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestQuestion_Test" Association="Self.FK_TestQuestion_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestQuestion" EntitySet="TestQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestResult_Test" Association="Self.FK_TestResult_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestResult" EntitySet="TestResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicTest_Test" Association="Self.FK_TopicTest_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TopicTest" EntitySet="TopicTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicTest_Theme" Association="Self.FK_TopicTest_Theme">
+            <End Role="Theme" EntitySet="Theme" />
+            <End Role="TopicTest" EntitySet="TopicTest" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBTextBookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Autorization">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_Test_Autorization" FromRole="Autorization" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="IdTest" />
+          </Key>
+          <Property Name="IdTest" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="CountQuestion" Type="Int32" Nullable="false" />
+          <Property Name="CreatorTest" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Autorization" Relationship="Self.FK_Test_Autorization" FromRole="Test" ToRole="Autorization" />
+          <NavigationProperty Name="TestQuestion" Relationship="Self.FK_TestQuestion_Test" FromRole="Test" ToRole="TestQuestion" />
+          <NavigationProperty Name="TestResult" Relationship="Self.FK_TestResult_Test" FromRole="Test" ToRole="TestResult" />
+          <NavigationProperty Name="TopicTest" Relationship="DBTextBookModel.FK_TopicTest_Test" FromRole="Test" ToRole="TopicTest" />
+        </EntityType>
+        <EntityType Name="TestAnswer">
+          <Key>
+            <PropertyRef Name="IdAnswer" />
+          </Key>
+          <Property Name="IdAnswer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdQuestion" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Correct" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TestQuestion" Relationship="Self.FK_TestAnswer_TestQuestion" FromRole="TestAnswer" ToRole="TestQuestion" />
+        </EntityType>
+        <EntityType Name="TestQuestion">
+          <Key>
+            <PropertyRef Name="IdQuestion" />
+          </Key>
+          <Property Name="IdQuestion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTest" Type="Int32" Nullable="false" />
+          <Property Name="TitleQuestion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_TestQuestion_Test" FromRole="TestQuestion" ToRole="Test" />
+          <NavigationProperty Name="TestAnswer" Relationship="Self.FK_TestAnswer_TestQuestion" FromRole="TestQuestion" ToRole="TestAnswer" />
+        </EntityType>
+        <EntityType Name="TestResult">
+          <Key>
+            <PropertyRef Name="IdResult" />
+          </Key>
+          <Property Name="IdResult" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTest" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="CorrectAnswers" Type="Int32" Nullable="false" />
+          <Property Name="DateOfPassage" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_TestResult_Test" FromRole="TestResult" ToRole="Test" />
+        </EntityType>
+        <Association Name="FK_Test_Autorization">
+          <End Role="Autorization" Type="Self.Autorization" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autorization">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="CreatorTest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestQuestion_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="IdTest" />
+            </Principal>
+            <Dependent Role="TestQuestion">
+              <PropertyRef Name="IdTest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestResult_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="TestResult" Type="Self.TestResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="IdTest" />
+            </Principal>
+            <Dependent Role="TestResult">
+              <PropertyRef Name="IdTest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestAnswer_TestQuestion">
+          <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="1" />
+          <End Role="TestAnswer" Type="Self.TestAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestQuestion">
+              <PropertyRef Name="IdQuestion" />
+            </Principal>
+            <Dependent Role="TestAnswer">
+              <PropertyRef Name="IdQuestion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBTextBookEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Autorization" EntityType="Self.Autorization" />
+          <EntitySet Name="Test" EntityType="Self.Test" />
+          <EntitySet Name="TestAnswer" EntityType="Self.TestAnswer" />
+          <EntitySet Name="TestQuestion" EntityType="Self.TestQuestion" />
+          <EntitySet Name="TestResult" EntityType="Self.TestResult" />
+          <AssociationSet Name="FK_Test_Autorization" Association="Self.FK_Test_Autorization">
+            <End Role="Autorization" EntitySet="Autorization" />
+            <End Role="Test" EntitySet="Test" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestQuestion_Test" Association="Self.FK_TestQuestion_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestQuestion" EntitySet="TestQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestResult_Test" Association="Self.FK_TestResult_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestResult" EntitySet="TestResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestAnswer_TestQuestion" Association="Self.FK_TestAnswer_TestQuestion">
+            <End Role="TestQuestion" EntitySet="TestQuestion" />
+            <End Role="TestAnswer" EntitySet="TestAnswer" />
+          </AssociationSet>
+          <EntitySet Name="Theme" EntityType="DBTextBookModel.Theme" />
+          <EntitySet Name="TopicTest" EntityType="DBTextBookModel.TopicTest" />
+          <AssociationSet Name="FK_TopicTest_Test" Association="DBTextBookModel.FK_TopicTest_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TopicTest" EntitySet="TopicTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TopicTest_Theme" Association="DBTextBookModel.FK_TopicTest_Theme">
+            <End Role="Theme" EntitySet="Theme" />
+            <End Role="TopicTest" EntitySet="TopicTest" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Theme">
+          <Key>
+            <PropertyRef Name="idTheme" />
+          </Key>
+          <Property Name="idTheme" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TextTheme" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TopicTest" Relationship="DBTextBookModel.FK_TopicTest_Theme" FromRole="Theme" ToRole="TopicTest" />
+        </EntityType>
+        <EntityType Name="TopicTest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Test" Type="Int32" Nullable="false" />
+          <Property Name="Theme" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Test1" Relationship="DBTextBookModel.FK_TopicTest_Test" FromRole="TopicTest" ToRole="Test" />
+          <NavigationProperty Name="Theme1" Relationship="DBTextBookModel.FK_TopicTest_Theme" FromRole="TopicTest" ToRole="Theme" />
+        </EntityType>
+        <Association Name="FK_TopicTest_Test">
+          <End Type="DBTextBookModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="DBTextBookModel.TopicTest" Role="TopicTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="IdTest" />
+            </Principal>
+            <Dependent Role="TopicTest">
+              <PropertyRef Name="Test" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TopicTest_Theme">
+          <End Type="DBTextBookModel.Theme" Role="Theme" Multiplicity="1" />
+          <End Type="DBTextBookModel.TopicTest" Role="TopicTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="idTheme" />
+            </Principal>
+            <Dependent Role="TopicTest">
+              <PropertyRef Name="Theme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DBTextBookModelContainer" CdmEntityContainer="DBTextBookEntities">
+          <EntitySetMapping Name="Autorization">
+            <EntityTypeMapping TypeName="DBTextBookModel.Autorization">
+              <MappingFragment StoreEntitySet="Autorization">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Test">
+            <EntityTypeMapping TypeName="DBTextBookModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="IdTest" ColumnName="IdTest" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="CountQuestion" ColumnName="CountQuestion" />
+                <ScalarProperty Name="CreatorTest" ColumnName="CreatorTest" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestAnswer">
+            <EntityTypeMapping TypeName="DBTextBookModel.TestAnswer">
+              <MappingFragment StoreEntitySet="TestAnswer">
+                <ScalarProperty Name="IdAnswer" ColumnName="IdAnswer" />
+                <ScalarProperty Name="IdQuestion" ColumnName="IdQuestion" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Correct" ColumnName="Correct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestQuestion">
+            <EntityTypeMapping TypeName="DBTextBookModel.TestQuestion">
+              <MappingFragment StoreEntitySet="TestQuestion">
+                <ScalarProperty Name="IdQuestion" ColumnName="IdQuestion" />
+                <ScalarProperty Name="IdTest" ColumnName="IdTest" />
+                <ScalarProperty Name="TitleQuestion" ColumnName="TitleQuestion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestResult">
+            <EntityTypeMapping TypeName="DBTextBookModel.TestResult">
+              <MappingFragment StoreEntitySet="TestResult">
+                <ScalarProperty Name="IdResult" ColumnName="IdResult" />
+                <ScalarProperty Name="IdTest" ColumnName="IdTest" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="CorrectAnswers" ColumnName="CorrectAnswers" />
+                <ScalarProperty Name="DateOfPassage" ColumnName="DateOfPassage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Theme">
+            <EntityTypeMapping TypeName="DBTextBookModel.Theme">
+              <MappingFragment StoreEntitySet="Theme">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TextTheme" ColumnName="TextTheme" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="idTheme" ColumnName="idTheme" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TopicTest">
+            <EntityTypeMapping TypeName="DBTextBookModel.TopicTest">
+              <MappingFragment StoreEntitySet="TopicTest">
+                <ScalarProperty Name="Theme" ColumnName="Theme" />
+                <ScalarProperty Name="Test" ColumnName="Test" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

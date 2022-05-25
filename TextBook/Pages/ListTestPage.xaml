@@ -1,0 +1,141 @@
+﻿<Page x:Class="TextBook.Pages.ListTestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:properties="clr-namespace:TextBook.Properties"
+      xmlns:local="clr-namespace:TextBook.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="650"
+      Title="Список тестов">
+
+    <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <ListView x:Name="lvTest"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  Margin="10"
+                  Grid.Row="1"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="lvTest_MouseDoubleClick">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="200"
+                Height="200"
+                Background="{DynamicResource AdditionalColor}"
+                CornerRadius="10"
+                HorizontalAlignment="Left"
+                Grid.Row="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Top"
+                           Margin="0,10,0,0"
+                           FontSize="18"
+                           Foreground="{DynamicResource MainColor}"
+                           TextWrapping="Wrap"
+                           Text="{Binding Title}"></TextBlock>
+                            <Button Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,0,10"
+                        Style="{DynamicResource btnList}"
+                        Width="150"
+                        Height="25"
+                        x:Name="btnUpdateTest"
+                        Click="btnUpdateTest_Click"
+                        Visibility="{Binding Source={x:Static properties:Settings.Default},Path=AdminStatus,Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <StackPanel Orientation="Horizontal"
+                                Margin="0,0,20,0">
+                                    <materialDesign:PackIcon Kind="Update"
+                                                 VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center"
+                                   Margin="10,0,0,2">Редактировать</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <StackPanel Orientation="Vertical"
+                            Grid.Row="1"
+                            VerticalAlignment="Top"
+                            Margin="10">
+                                <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="Clock"
+                                                 Width="20"
+                                                 Height="20"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="{DynamicResource MainColor}"/>
+                                    <TextBlock Margin="5,0,0,0"
+                                   Foreground="{DynamicResource MainColor}"
+                                   FontSize="16"
+                                   Text="{Binding Time}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="Pin"
+                                                 Width="20"
+                                                 Height="20"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="{DynamicResource MainColor}"/>
+                                    <TextBlock Margin="5,0,0,0"
+                                   FontSize="16"
+                                   Foreground="{DynamicResource MainColor}"
+                                   Text="{Binding CountQuestion}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBlock Text="{Binding ElementName=lvTest,Path=SelectedItem.Title}" 
+                   x:Name="labelTitle"
+                   Visibility="Hidden"/>
+        <UserControl HorizontalAlignment="Center"
+                 VerticalAlignment="Center">
+            <Grid>
+                <TextBox Style="{DynamicResource txbModernStyle}"
+                 
+                 HorizontalContentAlignment="Center"
+                 Margin="0,0,0,0"
+                 FontSize="18"
+                 x:Name="txbSearchTest" 
+                 LostFocus="txbSearchTest_LostFocus"
+                 GotFocus="txbSearchTest_GotFocus"
+                 TextChanged="txbSearchTest_TextChanged"></TextBox>
+                <TextBlock HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           FontSize="18"
+                           Margin="0,0,0,10"
+                           Foreground="{DynamicResource AdditionalColor}"
+                           x:Name="txbVisibleSearch"
+                           Panel.ZIndex="-2">Поиск теста</TextBlock>
+            </Grid>
+        </UserControl>
+        <Button Style="{DynamicResource btnEnter}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="25,0,0,0"
+                Width="120"
+                Height="30"
+                x:Name="btnAddTest"
+                Click="btnAddTest_Click"
+                Visibility="{Binding Source={x:Static properties:Settings.Default},Path=AdminStatus,Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Create"/>
+                <TextBlock>Добавить тест</TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Page>

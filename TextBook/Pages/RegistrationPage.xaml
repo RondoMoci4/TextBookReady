@@ -1,0 +1,83 @@
+﻿<Page x:Class="TextBook.Pages.RegistrationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:TextBook.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="650"
+      Title="Регистрация студента">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical"
+                    Margin="0,0,0,0">
+            <Border CornerRadius="10"
+                Style="{DynamicResource brdEnter}"
+                Width="Auto"
+                Height="Auto"
+                BorderThickness="1.5">
+                <Grid Margin="15">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                            <TextBox Style="{DynamicResource txbModernStyle}" x:Name="txbName"
+                                 Width="250"
+                                 Height="30"
+                                 Margin="0,0,0,0"
+                                 FontSize="16"
+                                     GotFocus="txbName_GotFocus" 
+                                     LostFocus="txbName_LostFocus">Введите имя</TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Margin="0,20,10,0">
+                            <TextBox Style="{DynamicResource txbModernStyle}" x:Name="txbSurname"
+                                 Width="250"
+                                 Height="30"
+                                 Margin="10,0,0,0"
+                                 FontSize="16"
+                                     GotFocus="txbSurname_GotFocus" 
+                                     LostFocus="txbSurname_LostFocus">Введите фамилию</TextBox>
+                        </StackPanel>
+                        <Button x:Name="btnRegistration"
+                            Margin="0,20,0,0"
+                            Width="250"
+                            Height="45"
+                            Style="{DynamicResource btnEnter}"
+                            Click="btnRegister_Click">
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0,0,10,0">
+                                <TextBlock>
+                                <materialDesign:PackIcon Kind="Login"
+                                                         Width="30"
+                                                         Height="30"/>
+                                </TextBlock>
+                                <TextBlock Text="Зарегистрироваться"
+                                       FontSize="18"
+                                       Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Width="200" 
+                    Height="0"
+                    Style="{DynamicResource brdEnter}"
+                    BorderThickness="1,0,1,1"
+                    CornerRadius="0,0,10,10"
+                    x:Name="brdInfo">
+                <Grid Margin="10">
+                    <TextBlock x:Name="txbInfoRegistration"
+                               Style="{DynamicResource txbEnter}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="16"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+       
+        
+    </Grid>
+</Page>

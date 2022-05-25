@@ -1,0 +1,135 @@
+﻿<Page x:Class="TextBook.Pages.ListThemePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:properties="clr-namespace:TextBook.Properties"
+      xmlns:local="clr-namespace:TextBook.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="650"
+      Title="Список тем">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="10"
+                Background="{DynamicResource AdditionalColor}"
+                Width="500">
+            <Grid>
+                
+            </Grid>
+        </Border>
+
+        <ListView x:Name="lvTheme"
+                  Grid.Row="1"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  Margin="10"
+                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  MouseDoubleClick="lvTheme_MouseDoubleClick">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="350"
+                Height="150"
+                CornerRadius="10"
+                Background="{DynamicResource AdditionalColor}">
+                        <Grid Margin="10">
+
+                            <TextBlock VerticalAlignment="Top"
+                           HorizontalAlignment="Center"
+                           FontSize="18"
+                           Foreground="{DynamicResource MainColor}"
+                           Text="{Binding Title}"></TextBlock>
+                            <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="40">
+                                <TextBlock FontSize="16"
+                               Foreground="{DynamicResource MainColor}"
+                               TextDecorations="Underline">Описание:</TextBlock>
+                                <TextBlock FontSize="16"
+                               Foreground="{DynamicResource MainColor}"
+                               Margin="10,0,0,0"
+                               TextWrapping="Wrap"
+                               Width="310"
+                                           Text="{Binding Description}"></TextBlock>
+                            </StackPanel>
+                            <Button Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,0,10"
+                        Style="{DynamicResource btnList}"
+                        Width="150"
+                        Height="25"
+                        x:Name="btnUpdateTheme"
+                        Click="btnUpdateTheme_Click"
+                        Visibility="{Binding Source={x:Static properties:Settings.Default},Path=AdminStatus,Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <StackPanel Orientation="Horizontal"
+                                Margin="0,0,20,0">
+                                    <materialDesign:PackIcon Kind="Update"
+                                                 VerticalAlignment="Center"/>
+                                    <TextBlock VerticalAlignment="Center"
+                                   Margin="10,0,0,2">Редактировать</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBlock Text="{Binding ElementName=lvTheme,Path=SelectedItem.Title}" 
+                   x:Name="labelTitle"
+                   Visibility="Hidden"/>
+        <UserControl HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                         Margin="0,0,0,0">
+            <Grid>
+                <TextBox Style="{DynamicResource txbModernStyle}"
+                 
+                 HorizontalContentAlignment="Center"
+                 Margin="0,0,0,0"
+                 FontSize="18"
+                 x:Name="txbSearchTheme" 
+                 LostFocus="txbSearchTheme_LostFocus"
+                 GotFocus="txbSearchTheme_GotFocus"
+                 TextChanged="txbSearchTheme_TextChanged"></TextBox>
+                <TextBlock HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           FontSize="18"
+                           Margin="0,0,0,10"
+                           Foreground="{DynamicResource AdditionalColor}"
+                           x:Name="txbVisibleSearch"
+                           Panel.ZIndex="-2">Поиск темы</TextBlock>
+            </Grid>
+        </UserControl>
+        <Button Style="{DynamicResource btnEnter}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="25,0,0,0"
+                Width="120"
+                Height="30"
+                x:Name="btnAddTheme"
+                Click="btnAddTheme_Click"
+                Visibility="{Binding Source={x:Static properties:Settings.Default},Path=AdminStatus,Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Create"/>
+                <TextBlock>Добавить тему</TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Page>
