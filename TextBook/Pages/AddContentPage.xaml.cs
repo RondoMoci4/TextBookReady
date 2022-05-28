@@ -59,10 +59,14 @@ namespace TextBook.Pages
         private void btnLoadTheme_Click(object sender, RoutedEventArgs e)
         {
 
-            TextRange doc = new TextRange(prgTextTheme.ContentStart, prgTextTheme.ContentEnd);
-            doc.Text = "";
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "RichText Files (*.rtf)|*.rtf|All files (*.*)|*.*";
+            TextRange doc = new TextRange(prgTextTheme.ContentStart, prgTextTheme.ContentEnd)
+            {
+                Text = ""
+            };
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "RichText Files (*.rtf)|*.rtf|All files (*.*)|*.*"
+            };
 
             if (ofd.ShowDialog() == true)
             {
@@ -223,18 +227,22 @@ namespace TextBook.Pages
             lbListTest.ItemsSource = ConnectionClass.connection.Test.ToList();
             if (brdListTest.Width == 450)
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 450;
-                anim.To = 0;
-                anim.Duration = TimeSpan.FromSeconds(1);
+                DoubleAnimation anim = new DoubleAnimation
+                {
+                    From = 450,
+                    To = 0,
+                    Duration = TimeSpan.FromSeconds(1)
+                };
                 brdListTest.BeginAnimation(WidthProperty, anim);
             }
             else
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 450;
-                anim.Duration = TimeSpan.FromSeconds(1);
+                DoubleAnimation anim = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 450,
+                    Duration = TimeSpan.FromSeconds(1)
+                };
                 brdListTest.BeginAnimation(WidthProperty, anim);
             }
         }
@@ -243,18 +251,22 @@ namespace TextBook.Pages
         {
             if (brdListImage.Width == 450)
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 450;
-                anim.To = 0;
-                anim.Duration = TimeSpan.FromSeconds(1);
+                DoubleAnimation anim = new DoubleAnimation
+                {
+                    From = 450,
+                    To = 0,
+                    Duration = TimeSpan.FromSeconds(1)
+                };
                 brdListImage.BeginAnimation(WidthProperty, anim);
             }
             else
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 450;
-                anim.Duration = TimeSpan.FromSeconds(1);
+                DoubleAnimation anim = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 450,
+                    Duration = TimeSpan.FromSeconds(1)
+                };
                 brdListImage.BeginAnimation(WidthProperty, anim);
                 btnAddImage.IsEnabled = true;
                 ListImage();
@@ -267,8 +279,10 @@ namespace TextBook.Pages
 
         private void btnAddImage_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG";
+            OpenFileDialog open = new OpenFileDialog
+            {
+                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG"
+            };
 
             if (open.ShowDialog() == true)
             {
@@ -303,8 +317,10 @@ namespace TextBook.Pages
         {
             int id = Convert.ToInt32(txbIdImage.Text);
             var image = ConnectionClass.connection.ImageTheme.FirstOrDefault(x => x.IdImage == id);
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG";
+            OpenFileDialog open = new OpenFileDialog
+            {
+                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG"
+            };
 
             if (open.ShowDialog() == true)
             {

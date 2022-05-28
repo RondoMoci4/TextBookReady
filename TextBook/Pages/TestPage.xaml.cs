@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using TextBook.Data;
@@ -57,6 +58,7 @@ namespace TextBook.Pages
             currentQuestion++;
             txbCurrentQuestion.Text = currentQuestion.ToString();
             txbTextQuestion.Text = ConnectionClass.connection.TestQuestion.Where(x => x.IdQuestion == numberQuestion).Select(x => x.TitleQuestion).FirstOrDefault();
+            ImageQuestion(txbTextQuestion.Text);
             timeStart = time;
             btnBack.IsEnabled = false; btnBack.Opacity = 0.3;
         }
@@ -79,6 +81,7 @@ namespace TextBook.Pages
                 }
                 else
                 {
+                    
                     btnBack.IsEnabled = true; btnBack.Opacity = 1;
                     string correctAnswer = ConnectionClass.connection.TestAnswer.Where(x => x.Answer == textAnswer).Select(x => x.Correct).FirstOrDefault().ToString();
                     if (correctAnswer == "True") { countCorrentQuestion++; backQuestionTrue = true; } else { backQuestionTrue = false; }
@@ -88,8 +91,13 @@ namespace TextBook.Pages
                     txbCurrentQuestion.Text = currentQuestion.ToString();
                     LoadAnswer();
                     rbOneAnswer.IsChecked = false; rbTwoAnswer.IsChecked = false; rbThreeAnswer.IsChecked = false; rbFourAnswer.IsChecked = false;
+                    
                     txbTextQuestion.Text = ConnectionClass.connection.TestQuestion.Where(x => x.IdQuestion == numberQuestion).Select(x => x.TitleQuestion).FirstOrDefault();
+                    ImageQuestion(txbTextQuestion.Text);
+                    MessageBox.Show(txbTextQuestion.Text);
+                    
                 }
+                
             }
 
             //удаляет из списка текущий вопрос
@@ -103,6 +111,7 @@ namespace TextBook.Pages
             }
             else
             {
+                ImageQuestion(txbTextQuestion.Text);
                 numberQuestion = idBackQuestion.Last();
                 idQuestion.Add(numberQuestion); idBackQuestion.Remove(numberQuestion);
                 currentQuestion--;
@@ -111,7 +120,9 @@ namespace TextBook.Pages
                 txbCurrentQuestion.Text = currentQuestion.ToString();
                 rbOneAnswer.IsChecked = false; rbTwoAnswer.IsChecked = false; rbThreeAnswer.IsChecked = false; rbFourAnswer.IsChecked = false;
                 txbTextQuestion.Text = ConnectionClass.connection.TestQuestion.Where(x => x.IdQuestion == numberQuestion).Select(x => x.TitleQuestion).FirstOrDefault();
+                
             }
+
             //добавляет в список прошлый вопрос
         }
 
@@ -119,18 +130,22 @@ namespace TextBook.Pages
         {
             if (brdInfoTest.Width == 450)
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 450;
-                anim.To = 0;
-                anim.Duration = TimeSpan.FromSeconds(1);
+                DoubleAnimation anim = new DoubleAnimation
+                {
+                    From = 450,
+                    To = 0,
+                    Duration = TimeSpan.FromSeconds(1)
+                };
                 brdInfoTest.BeginAnimation(WidthProperty, anim);
             }
             else
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 450;
-                anim.Duration = TimeSpan.FromSeconds(1);
+                DoubleAnimation anim = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 450,
+                    Duration = TimeSpan.FromSeconds(1)
+                };
                 brdInfoTest.BeginAnimation(WidthProperty, anim);
             }
         }
@@ -210,6 +225,20 @@ namespace TextBook.Pages
             }, Application.Current.Dispatcher);
 
             _timer.Start();
+        }
+
+        private void ImageQuestion(string question)
+        {
+            imageQuestion.Visibility = Visibility.Hidden;
+            txbTextQuestion.Visibility = Visibility.Visible;
+            var image = ConnectionClass.connection.TestQuestion.FirstOrDefault(x => x.TitleQuestion == question);
+            if (image.ImageQuestion != null)
+            {
+                txbTextQuestion.Visibility = Visibility.Hidden;
+                imageQuestion.Source = (ImageSource)new ImageSourceConverter().ConvertFrom(image.ImageQuestion);
+                imageQuestion.Visibility = Visibility.Visible;
+            }
+            
         }
     }
 }
