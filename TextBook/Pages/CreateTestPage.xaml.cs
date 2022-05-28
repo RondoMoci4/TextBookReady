@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,7 @@ namespace TextBook.Pages
     /// </summary>
     public partial class CreateTestPage : Page
     {
-        TimeSpan timeTest = new TimeSpan(0,0,0);
+        TimeSpan timeTest = new TimeSpan(0, 0, 0);
         bool Existing;
         int countQuestion = 0;
         int idTest;
@@ -42,14 +44,15 @@ namespace TextBook.Pages
                 txbTime.Text = timeTest.ToString();
                 txbCountQuestion.Text = $"{countQuestion}";
                 Existing = false;
+                btnQuestionInfo.IsEnabled = false; btnQuestionInfo.Opacity = 0.3;
             }
             else
             {
                 Existing = true;
                 LoadTest(Properties.Settings.Default.IdExistingTest);
             }
-           
-            
+
+
         }
         private void btnAddQuestion_Click(object sender, RoutedEventArgs e)
         {
@@ -187,6 +190,7 @@ namespace TextBook.Pages
                                             ConnectionClass.connection.TestAnswer.Add(answer);
                                             ConnectionClass.connection.SaveChanges();
                                         }
+                                        btnQuestionInfo.IsEnabled = true; btnQuestionInfo.Opacity = 1;
                                         Existing = true;
                                         UpdateListQuestion();
                                         btnResetQuestion_Click(sender, e);
@@ -349,12 +353,12 @@ namespace TextBook.Pages
                 else
                 {
                     MessageBox.Show("Увеличьте время прохождения!!!");
-                }    
+                }
             }
         }
         private void btnUpdateQuestion_Click(object sender, RoutedEventArgs e)
         {
-            if(txbTime.Text != "00:00:00")
+            if (txbTime.Text != "00:00:00")
             {
                 if (!String.IsNullOrWhiteSpace(txbQuestion.Text))
                 {
@@ -468,7 +472,7 @@ namespace TextBook.Pages
             txbAnswerOne.Text = Answer[0]; txbAnswerTwo.Text = Answer[1]; txbAnswerThree.Text = Answer[2]; txbAnswerFour.Text = Answer[3];
             List<bool> answerBool = new List<bool>(answer.Select(x => x.Correct));
             rbOneAnswer.IsChecked = answerBool[0]; rbTwoAnswer.IsChecked = answerBool[1];
-            rbThreeAnswer.IsChecked = answerBool[2]; rbFourAnswer.IsChecked= answerBool[3];
+            rbThreeAnswer.IsChecked = answerBool[2]; rbFourAnswer.IsChecked = answerBool[3];
             btnDeleteQuestion.IsEnabled = true; btnDeleteQuestion.Opacity = 1;
             btnUpdateQuestion.IsEnabled = true; btnUpdateQuestion.Opacity = 1;
             btnResetQuestion.IsEnabled = true; btnResetQuestion.Opacity = 1;
@@ -491,7 +495,7 @@ namespace TextBook.Pages
 
         private void btnQuestionInfo_Click(object sender, RoutedEventArgs e)
         {
-            if(Properties.Settings.Default.IdExistingTest == 0)
+            if (Properties.Settings.Default.IdExistingTest == 0)
             {
                 var idTest = ConnectionClass.connection.Test.FirstOrDefault(x => x.Title == txbTitleTest.Text);
                 lbListQuestion.ItemsSource = ConnectionClass.connection.TestQuestion.Where(x => x.IdTest == idTest.IdTest).ToList();
@@ -518,11 +522,11 @@ namespace TextBook.Pages
             }
         }
 
-        private void btnUpTime_Click(object sender, RoutedEventArgs e) { UpTime(txbTime,cmbUnitTime); }
+        private void btnUpTime_Click(object sender, RoutedEventArgs e) { UpTime(txbTime, cmbUnitTime); }
 
         private void btnDownTime_Click(object sender, RoutedEventArgs e) { DownTime(txbTime, cmbUnitTime); }
 
-        private void UpTime(TextBox text,ComboBox comboBox)
+        private void UpTime(TextBox text, ComboBox comboBox)
         {
             if (comboBox.SelectedIndex == 1)
             {
@@ -586,7 +590,7 @@ namespace TextBook.Pages
             btnDeleteQuestion.IsEnabled = false;
             btnUpdateQuestion.IsEnabled = false;
             btnResetQuestion.IsEnabled = false;
-        } 
+        }
 
         private void rbAllChecked(object sender, RoutedEventArgs e) { RadioButton button = (RadioButton)sender; button.IsChecked = true; }
 
@@ -600,6 +604,51 @@ namespace TextBook.Pages
             rbFourAnswer.IsChecked = false;
         }
 
-       
+        private void btnAddImage_Click(object sender, RoutedEventArgs e)
+        {
+            var question = ConnectionClass.connection.TestQuestion.FirstOrDefault(x => x.TitleQuestion == txbQuestion.Text);
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG";
+
+            if (open.ShowDialog() == true)
+            {
+                byte[] imageData = File.ReadAllBytes(open.FileName);
+                imageQuestion.Source = (ImageSource)new ImageSourceConverter().ConvertFrom(imageData);
+                question.ImageQuestion = imageData;
+                ConnectionClass.connection.SaveChanges();
+                
+            }
+            MessageBox.Show("Изображение сохранено");
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            stkpImageQuestion.Visibility = Visibility.Visible;
+            if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+            {
+                imageQuestion.Width = 550; imageQuestion.Height = 550;
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            stkpImageQuestion.Visibility = Visibility.Hidden;
+            if (Application.Current.MainWindow.WindowState == WindowState.Minimized)
+            {
+                imageQuestion.Width = 250; imageQuestion.Height = 250;
+            }
+        }
+
+        private void txbQuestion_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txbQuestion.Text))
+            {
+                ckbImage.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                ckbImage.Visibility = Visibility.Visible;
+            }
+        }
     }
 }
