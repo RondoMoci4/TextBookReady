@@ -120,44 +120,61 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <StackPanel Margin="20,30,0,0"
+        <StackPanel Margin="20,0,0,0"
                     HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Orientation="Horizontal">
-            <StackPanel>
-                <UserControl HorizontalAlignment="Left"
+            <UserControl HorizontalAlignment="Left"
                      VerticalAlignment="Top">
-                    <Grid>
-                        <TextBlock Foreground="{DynamicResource AdditionalColor}"
+                <Grid>
+                    <TextBlock Foreground="{DynamicResource AdditionalColor}"
                                FontSize="18"
                                x:Name="txbSearchNameVisible">Поиск по имени</TextBlock>
-                        <TextBox Style="{DynamicResource txbModernStyle}"
+                    <TextBox Style="{DynamicResource txbModernStyle}"
                              FontSize="18"
                              TextAlignment="Center"
                              x:Name="txbSearchName"
                              LostFocus="txbSearchName_LostFocus"
                              GotFocus="txbSearchName_GotFocus" TextChanged="txbSearchName_TextChanged"></TextBox>
-                    </Grid>
-                </UserControl>
-                <UserControl HorizontalAlignment="Left"
+                </Grid>
+            </UserControl>
+            <UserControl HorizontalAlignment="Left"
                      VerticalAlignment="Top"
-                         Margin="0,15,0,0">
-                    <Grid>
-                        <TextBlock Foreground="{DynamicResource AdditionalColor}"
+                         Margin="20,0,0,0">
+                <Grid>
+                    <TextBlock Foreground="{DynamicResource AdditionalColor}"
                            FontSize="18"
                            x:Name="txbSearchSurnameVisible">Поиск по фамилии</TextBlock>
-                        <TextBox Style="{DynamicResource txbModernStyle}"
+                    <TextBox Style="{DynamicResource txbModernStyle}"
                              Margin="0,0,0,0"
                              FontSize="18"
                              TextAlignment="Center"
                              x:Name="txbSearchSurname"
                              GotFocus="txbSearchSurname_GotFocus"
                              LostFocus="txbSearchSurname_LostFocus" TextChanged="txbSearchSurname_TextChanged"></TextBox>
-                    </Grid>
-                </UserControl>
-            </StackPanel>
-            <StackPanel Margin="50,0,0,0">
-
-            </StackPanel>
+                </Grid>
+            </UserControl>
         </StackPanel>
+        <StackPanel HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="20"
+                    Orientation="Horizontal">
+            <Button Style="{DynamicResource btnEnter}"
+                    x:Name="btnWordFile"
+                    Click="btnWordFile_Click">
+                <materialDesign:PackIcon Kind="FileWord"
+                                     Width="40"
+                                     Height="40"/>
+            </Button>
+            <Button Style="{DynamicResource btnEnter}"
+                    x:Name="btnExcelFile"
+                    Click="btnExcelFile_Click"
+                    Margin="10,0,0,0">
+                <materialDesign:PackIcon Kind="FileExcel"
+                                     Width="40"
+                                     Height="40"/>
+            </Button>
+        </StackPanel>
+       
     </Grid>
 </Page>

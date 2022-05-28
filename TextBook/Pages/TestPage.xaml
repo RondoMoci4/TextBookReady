@@ -13,8 +13,8 @@
         <Grid x:Name="grdTest"
               Visibility="Visible">
             <Grid.RowDefinitions>
+                <RowDefinition />
                 <RowDefinition Height="300"/>
-                <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical"
                     Grid.Row="1"
@@ -127,6 +127,7 @@
                    Height="250"
                    VerticalAlignment="Top"
                    x:Name="imageQuestion"
+                   Margin="0,20,0,0"
                    Visibility="Hidden"/>
             <TextBlock Margin="10,0,10,30"
                        HorizontalAlignment="Center"

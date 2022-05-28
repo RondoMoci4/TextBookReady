@@ -234,6 +234,8 @@ namespace TextBook.Pages
             var image = ConnectionClass.connection.TestQuestion.FirstOrDefault(x => x.TitleQuestion == question);
             if (image.ImageQuestion != null)
             {
+                if (Application.Current.MainWindow.WindowState == WindowState.Maximized) { imageQuestion.Width = 450; imageQuestion.Height = 450; }
+                else { imageQuestion.Width = 250; imageQuestion.Height = 250; }
                 txbTextQuestion.Visibility = Visibility.Hidden;
                 imageQuestion.Source = (ImageSource)new ImageSourceConverter().ConvertFrom(image.ImageQuestion);
                 imageQuestion.Visibility = Visibility.Visible;

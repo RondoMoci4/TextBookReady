@@ -69,5 +69,15 @@ namespace TextBook.Pages
         {
 
         }
+
+        private void btnWordFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnExcelFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
