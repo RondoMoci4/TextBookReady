@@ -18,6 +18,8 @@
         <EntityTypeShape EntityType="DBTextBookModel.TopicTest" Width="1.5" PointX="8.25" PointY="3.875" />
         <AssociationConnector Association="DBTextBookModel.FK_TopicTest_Test" />
         <AssociationConnector Association="DBTextBookModel.FK_TopicTest_Theme" />
+        <EntityTypeShape EntityType="DBTextBookModel.ImageTheme" Width="1.5" PointX="8.25" PointY="8" />
+        <AssociationConnector Association="DBTextBookModel.FK_ImageTheme_Theme" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

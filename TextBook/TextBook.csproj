@@ -119,6 +119,9 @@
     <Compile Include="Data\DocxReader.cs" />
     <Compile Include="Data\DocxToFlowDocunetConvert.cs" />
     <Compile Include="Data\FrameClass.cs" />
+    <Compile Include="Data\ImageTheme.cs">
+      <DependentUpon>DataBaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Test.cs">
       <DependentUpon>DataBaseModel.tt</DependentUpon>
     </Compile>
@@ -276,6 +279,7 @@
       <DependentUpon>DataBaseModel.edmx</DependentUpon>
       <LastGenOutput>DataBaseModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Image\imageNull.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets')" />

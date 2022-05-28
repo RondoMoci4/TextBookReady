@@ -744,7 +744,7 @@
     <Style x:Key="{x:Type TextBoxBase}" TargetType="{x:Type TextBoxBase}">
         <Setter Property="Background" Value="{StaticResource MainColor}"/>
         <Setter Property="BorderBrush" Value="{StaticResource AdditionalColor}"/>
-        <Setter Property="Foreground" Value="{StaticResource AdditionalColor}"/>
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>

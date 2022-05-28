@@ -11,9 +11,7 @@
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip"
-        MinHeight="550"
-        MinWidth="450">
+        ResizeMode="NoResize">
     <Border CornerRadius="10"
             x:Name="borderMain"
             Style="{DynamicResource brdDarkLight}"
@@ -26,12 +24,6 @@
                 <RowDefinition />
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <ResizeGrip x:Name="resizeGrip" Grid.Row="2"
-                        Opacity="1"
-                        HorizontalAlignment="Right"
-                        Width="10"
-                        Foreground="{DynamicResource AdditionalColor}"
-                        Margin="5"/>
             <StackPanel Orientation="Horizontal"
                         Grid.Column="2"
                         HorizontalAlignment="Right"
@@ -156,7 +148,8 @@
                 Height="30"
                 x:Name="btnBack"
                         Margin="10,0,0,0"
-                        Click="btnBack_Click">
+                        Click="btnBack_Click"
+                        Visibility="Hidden">
                     <materialDesign:PackIcon Kind="ArrowBack"
                                      Width="25"
                                      Height="25"/>

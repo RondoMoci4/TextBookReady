@@ -16,6 +16,15 @@
           <Property Name="Surname" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Patronymic" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="ImageTheme">
+          <Key>
+            <PropertyRef Name="IdImage" />
+          </Key>
+          <Property Name="IdImage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTheme" Type="int" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Test">
           <Key>
             <PropertyRef Name="IdTest" />
@@ -43,6 +52,7 @@
           <Property Name="IdQuestion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdTest" Type="int" Nullable="false" />
           <Property Name="TitleQuestion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ImageQuestion" Type="image" />
         </EntityType>
         <EntityType Name="TestResult">
           <Key>
@@ -73,6 +83,18 @@
           <Property Name="Test" Type="int" Nullable="false" />
           <Property Name="Theme" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ImageTheme_Theme">
+          <End Role="Theme" Type="Self.Theme" Multiplicity="1" />
+          <End Role="ImageTheme" Type="Self.ImageTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="idTheme" />
+            </Principal>
+            <Dependent Role="ImageTheme">
+              <PropertyRef Name="IdTheme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Test_Autorization">
           <End Role="Autorization" Type="Self.Autorization" Multiplicity="1" />
           <End Role="Test" Type="Self.Test" Multiplicity="*" />
@@ -147,12 +169,17 @@
         </Association>
         <EntityContainer Name="Хранилище DBTextBookModelContainer">
           <EntitySet Name="Autorization" EntityType="Self.Autorization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageTheme" EntityType="Self.ImageTheme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestAnswer" EntityType="Self.TestAnswer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestQuestion" EntityType="Self.TestQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestResult" EntityType="Self.TestResult" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Theme" EntityType="Self.Theme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TopicTest" EntityType="Self.TopicTest" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ImageTheme_Theme" Association="Self.FK_ImageTheme_Theme">
+            <End Role="Theme" EntitySet="Theme" />
+            <End Role="ImageTheme" EntitySet="ImageTheme" />
+          </AssociationSet>
           <AssociationSet Name="FK_Test_Autorization" Association="Self.FK_Test_Autorization">
             <End Role="Autorization" EntitySet="Autorization" />
             <End Role="Test" EntitySet="Test" />
@@ -228,6 +255,7 @@
           <Property Name="TitleQuestion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Test" Relationship="Self.FK_TestQuestion_Test" FromRole="TestQuestion" ToRole="Test" />
           <NavigationProperty Name="TestAnswer" Relationship="Self.FK_TestAnswer_TestQuestion" FromRole="TestQuestion" ToRole="TestAnswer" />
+          <Property Name="ImageQuestion" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="TestResult">
           <Key>
@@ -322,6 +350,11 @@
             <End Role="Theme" EntitySet="Theme" />
             <End Role="TopicTest" EntitySet="TopicTest" />
           </AssociationSet>
+          <EntitySet Name="ImageTheme" EntityType="DBTextBookModel.ImageTheme" />
+          <AssociationSet Name="FK_ImageTheme_Theme" Association="DBTextBookModel.FK_ImageTheme_Theme">
+            <End Role="Theme" EntitySet="Theme" />
+            <End Role="ImageTheme" EntitySet="ImageTheme" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Theme">
           <Key>
@@ -332,6 +365,7 @@
           <Property Name="TextTheme" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TopicTest" Relationship="DBTextBookModel.FK_TopicTest_Theme" FromRole="Theme" ToRole="TopicTest" />
+          <NavigationProperty Name="ImageTheme" Relationship="DBTextBookModel.FK_ImageTheme_Theme" FromRole="Theme" ToRole="ImageTheme" />
         </EntityType>
         <EntityType Name="TopicTest">
           <Key>
@@ -364,6 +398,28 @@
             </Principal>
             <Dependent Role="TopicTest">
               <PropertyRef Name="Theme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ImageTheme">
+          <Key>
+            <PropertyRef Name="IdImage" />
+          </Key>
+          <Property Name="IdImage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTheme" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Theme" Relationship="DBTextBookModel.FK_ImageTheme_Theme" FromRole="ImageTheme" ToRole="Theme" />
+        </EntityType>
+        <Association Name="FK_ImageTheme_Theme">
+          <End Type="DBTextBookModel.Theme" Role="Theme" Multiplicity="1" />
+          <End Type="DBTextBookModel.ImageTheme" Role="ImageTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="idTheme" />
+            </Principal>
+            <Dependent Role="ImageTheme">
+              <PropertyRef Name="IdTheme" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -410,6 +466,7 @@
           <EntitySetMapping Name="TestQuestion">
             <EntityTypeMapping TypeName="DBTextBookModel.TestQuestion">
               <MappingFragment StoreEntitySet="TestQuestion">
+                <ScalarProperty Name="ImageQuestion" ColumnName="ImageQuestion" />
                 <ScalarProperty Name="IdQuestion" ColumnName="IdQuestion" />
                 <ScalarProperty Name="IdTest" ColumnName="IdTest" />
                 <ScalarProperty Name="TitleQuestion" ColumnName="TitleQuestion" />
@@ -445,6 +502,16 @@
                 <ScalarProperty Name="Theme" ColumnName="Theme" />
                 <ScalarProperty Name="Test" ColumnName="Test" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageTheme">
+            <EntityTypeMapping TypeName="DBTextBookModel.ImageTheme">
+              <MappingFragment StoreEntitySet="ImageTheme">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="IdTheme" ColumnName="IdTheme" />
+                <ScalarProperty Name="IdImage" ColumnName="IdImage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -15,20 +15,20 @@ namespace TextBook.Data
 using System;
     using System.Collections.Generic;
     
-public partial class TestAnswer
+public partial class ImageTheme
 {
 
-    public int IdAnswer { get; set; }
+    public int IdImage { get; set; }
 
-    public int IdQuestion { get; set; }
+    public int IdTheme { get; set; }
 
-    public string Answer { get; set; }
+    public byte[] Image { get; set; }
 
-    public bool Correct { get; set; }
+    public string Name { get; set; }
 
 
 
-    public virtual TestQuestion TestQuestion { get; set; }
+    public virtual Theme Theme { get; set; }
 
 }
 
