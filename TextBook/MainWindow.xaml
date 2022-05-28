@@ -104,6 +104,9 @@
                       </materialDesign:PackIcon>
                       </TextBlock>
                       </Grid>
+                        <UserControl.ToolTip>
+                            <ToolTip Style="{DynamicResource tltpElement}">Вернуться на главную страницу</ToolTip>
+                        </UserControl.ToolTip>
                       </UserControl>
                     <TextBlock Style="{DynamicResource txbEnter}"
                                VerticalAlignment="Center"
@@ -160,7 +163,7 @@
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="10" MaxWidth="200" Width="10"/>
+                    <ColumnDefinition MinWidth="10" Width="10"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
@@ -201,7 +204,7 @@
                     </Grid>
                 </Border>
                 <GridSplitter Style="{DynamicResource GridSplitterStyle}" Grid.Column="1" ShowsPreview="False" Width="3"
-        HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        HorizontalAlignment="Center" VerticalAlignment="Stretch" IsEnabled="False" />
                 <Grid Grid.Column="2">
                     <Frame NavigationUIVisibility="Hidden"
                            x:Name="frmMain"/>

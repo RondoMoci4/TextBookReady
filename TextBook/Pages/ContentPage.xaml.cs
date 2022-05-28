@@ -25,17 +25,25 @@ namespace TextBook.Pages
     public partial class ContentPage : Page
     {
         string titleTest;
+        int idTheme;
+        int currentImage = 1;
+        int countInImage = 1;
+        int maxImage;
         public ContentPage()
         {
             InitializeComponent();
             ConnectionClass.connection = new DBTextBookEntities();
             var theme = ConnectionClass.connection.Theme.FirstOrDefault(x => x.Title == Properties.Settings.Default.TitleTheme);
+            var imageTheme = ConnectionClass.connection.ImageTheme.FirstOrDefault(x => x.IdTheme == theme.idTheme);
             var test = ConnectionClass.connection.TopicTest.FirstOrDefault(x => x.Theme == theme.idTheme);
+            idTheme = theme.idTheme;
             string texttheme = Encoding.UTF8.GetString(theme.TextTheme);
             prTitle.Inlines.Add(theme.Title);
             prTheme.Inlines.Add(texttheme);
             if (test == null) { btnTestTheme.Opacity = 0.3; btnTestTheme.IsEnabled = false; }
             else { btnTestTheme.Opacity = 1; btnTestTheme.IsEnabled = true; var title = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == test.Test); titleTest = title.Title; }
+            if (imageTheme == null) { stplImage.Visibility = Visibility.Hidden; } else { ListImage(); stplImage.Visibility = Visibility.Visible; }
+            
         }
 
         private void btnTestTheme_Click(object sender, RoutedEventArgs e)
@@ -119,5 +127,47 @@ namespace TextBook.Pages
                 textBox.Text = null;
             }
         }
+
+        private void btnNextImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentImage < maxImage)
+            {
+                currentImage++;
+                ListImage();
+            }
+            else { currentImage = 1; ListImage(); }
+        }
+
+        private void lbImage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+            {
+                imageVisible.Width = 700; imageVisible.Height = 700;
+                currentImageTheme.Width = 630; currentImageTheme.Height = 630;
+                txbNameImage.FontSize = 24;
+            }
+            else
+            {
+                imageVisible.Width = 370; imageVisible.Height = 370;
+                currentImageTheme.Width = 310; currentImageTheme.Height = 310;
+                txbNameImage.FontSize = 18;
+            }
+            int id = Convert.ToInt32(txbIdImage.Text);
+            var image = ConnectionClass.connection.ImageTheme.FirstOrDefault(x => x.IdImage == id);
+            currentImageTheme.Source = (ImageSource)new ImageSourceConverter().ConvertFrom(image.Image);
+            txbNameImage.Text = image.Name;
+            rtbTheme.Opacity = 0.4;
+            imageVisible.Visibility = Visibility.Visible;
+        }
+
+        private void ListImage()
+        {
+            ConnectionClass.connection = new DBTextBookEntities();
+            List<ImageTheme> themes = ConnectionClass.connection.ImageTheme.Where(x => x.IdTheme == idTheme).ToList();
+            maxImage = themes.Count;
+            lbImage.ItemsSource = themes.Skip((currentImage - 1) * countInImage).Take(countInImage).ToList();
+        }
+
+        private void btnCloseVisibleImage_Click(object sender, RoutedEventArgs e) { imageVisible.Visibility = Visibility.Hidden; rtbTheme.Opacity = 1; }
     }
 }

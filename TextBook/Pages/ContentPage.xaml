@@ -11,9 +11,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="170"/>
             <RowDefinition/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <RichTextBox Grid.Row="1"
                      x:Name="rtbTheme"
@@ -51,12 +51,14 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Left"
-                    Margin="20,0,0,0"
-                    Orientation="Horizontal">
-            <UserControl HorizontalAlignment="Center"
-                 VerticalAlignment="Center">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <UserControl HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                     Margin="40,0,0,0">
                 <Grid>
                     <TextBox Style="{DynamicResource txbModernStyle}"
                  
@@ -76,14 +78,87 @@
                            Panel.ZIndex="-2">Поиск</TextBlock>
                 </Grid>
             </UserControl>
-            <Label x:Name="lbl_Status"
+            <TextBlock Text="{Binding ElementName=lbImage,Path=SelectedItem.IdImage}"
+                   x:Name="txbIdImage" Visibility="Hidden"/>
+            <StackPanel Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,10,0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        x:Name="stplImage">
+                <ListBox HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                               x:Name="lbImage" MouseDoubleClick="lbImage_MouseDoubleClick"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Width="170" Height="170" Source="{Binding Image}" x:Name="imageTheme"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Style="{DynamicResource btnEnter}"
+                                    x:Name="btnNextImage"
+                                    Margin="10,0,0,0"
+                                    Click="btnNextImage_Click"
+                                Width="40"
+                        Height="100">
+                    <materialDesign:PackIcon Kind="ArrowLeftRight"
+                                                         Width="40"
+                                                         Height="40"/>
+                    <Button.ToolTip>
+                        <ToolTip Style="{DynamicResource tltpElement}">Предыдущие/Следующие изображение</ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Label x:Name="lbl_Status"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Margin="30,0,0,0"
                Foreground="{DynamicResource AdditionalColor}"
                FontSize="16">
-            </Label>
-        </StackPanel>
+        </Label>
+        <UserControl Grid.Row="1"
+                     Width="370"
+                     Height="370"
+                     x:Name="imageVisible"
+                     Visibility="Hidden">
+            <Border Background="{DynamicResource MainColor}"
+                    CornerRadius="10"
+                    BorderThickness="1"
+                    BorderBrush="{DynamicResource AdditionalColor}">
+                <Grid>
+                    <Button HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Style="{DynamicResource btnEnter}"
+                            Margin="5"
+                            x:Name="btnCloseVisibleImage"
+                            Click="btnCloseVisibleImage_Click">
+                        <materialDesign:PackIcon Kind="Close"
+                                                 Width="20"
+                                                 Height="20"/>
+                    </Button>
+                    <Image x:Name="currentImageTheme"
+                           Width="310"
+                           Height="310"
+                           VerticalAlignment="Top"
+                           Margin="0,10,0,0"/>
+                    <TextBlock VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,10"
+                               FontSize="18"
+                               TextWrapping="Wrap"
+                               x:Name="txbNameImage"
+                               Foreground="{DynamicResource AdditionalColor}"/>
+                </Grid>
+            </Border>
+        </UserControl>
         
     </Grid>
 </Page>
