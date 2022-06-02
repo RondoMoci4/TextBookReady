@@ -23,16 +23,11 @@ namespace TextBook.Pages
         List<int> idQuestion = new List<int>();
         List<int> idBackQuestion = new List<int>();
         string textAnswer;
-        int resultRating;
-        int countQuestion;
-        int ranQuestion;
-        int numberQuestion;
-        double countCorrentQuestion;
-        double currentQuestion;
-        double twoRating = 0;
-        double threeRating = 0.3;
-        double fourRating = 0.6;
-        double fiveRating = 0.9;
+        int resultRating; int countQuestion;
+        int ranQuestion; int numberQuestion;
+        double countCorrentQuestion; double currentQuestion;
+        double twoRating = 0; double threeRating = 0.3;
+        double fourRating = 0.6; double fiveRating = 0.9;
         double currentRating;
         bool backQuestionTrue;
         public TestPage()
@@ -164,7 +159,7 @@ namespace TextBook.Pages
             };
             ConnectionClass.connection.TestResult.Add(result);
             ConnectionClass.connection.SaveChanges();
-            FrameClass.mainFrame.Navigate(new ListTestPage());
+            FrameClass.mainFrame.Navigate(new MainPage());
         }
 
         private void grdResult_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -240,7 +235,6 @@ namespace TextBook.Pages
                 imageQuestion.Source = (ImageSource)new ImageSourceConverter().ConvertFrom(image.ImageQuestion);
                 imageQuestion.Visibility = Visibility.Visible;
             }
-            
         }
     }
 }
