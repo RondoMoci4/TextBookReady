@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Word = Microsoft.Office.Interop.Word;
 using TextBook.Data;
 
 namespace TextBook.Pages
@@ -26,8 +18,7 @@ namespace TextBook.Pages
         {
             InitializeComponent();
             ConnectionClass.connection = new DBTextBookEntities();
-            
-            dgInfoResult.ItemsSource = ConnectionClass.connection.TestResult.ToList();
+            SearchResult();
         }
 
         private void btnCreateTest_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.Navigate(new ListTestPage()); }
@@ -36,9 +27,9 @@ namespace TextBook.Pages
 
         private void txbSearchSurname_GotFocus(object sender, RoutedEventArgs e) { GotFocusAnimation(txbSearchSurnameVisible); }
 
-        private void txbSearchSurname_LostFocus(object sender, RoutedEventArgs e) { LostFocusAnimation(txbSearchSurnameVisible); }
+        private void txbSearchSurname_LostFocus(object sender, RoutedEventArgs e) { LostFocusAnimation(txbSearchSurnameVisible,txbSearchSurname); }
 
-        private void txbSearchName_LostFocus(object sender, RoutedEventArgs e) { LostFocusAnimation(txbSearchNameVisible); }
+        private void txbSearchName_LostFocus(object sender, RoutedEventArgs e) { LostFocusAnimation(txbSearchNameVisible,txbSearchName); }
 
         private void txbSearchName_GotFocus(object sender, RoutedEventArgs e) { GotFocusAnimation(txbSearchNameVisible); }
 
@@ -51,33 +42,71 @@ namespace TextBook.Pages
             textblock.FontSize = 14;
         }
 
-        private void LostFocusAnimation(TextBlock textblock)
+        private void LostFocusAnimation(TextBlock textVisible, TextBox textBox)
         {
-            TranslateTransform transform = new TranslateTransform();
-            textblock.RenderTransform = transform;
-            DoubleAnimation animationY = new DoubleAnimation(-20, 0, TimeSpan.FromSeconds(0.3));
-            transform.BeginAnimation(TranslateTransform.YProperty, animationY);
-            textblock.FontSize = 18;
+            if (String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                TranslateTransform transform = new TranslateTransform();
+                textVisible.RenderTransform = transform;
+                DoubleAnimation animationY = new DoubleAnimation(-20, 0, TimeSpan.FromSeconds(0.3));
+                transform.BeginAnimation(TranslateTransform.YProperty, animationY);
+                textVisible.FontSize = 18;
+                textBox.Text = null;
+            }
         }
+        private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e) { SearchResult(); }
 
-        private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void txbSearchSurname_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        private void txbSearchSurname_TextChanged(object sender, TextChangedEventArgs e) { SearchResult(); }
 
         private void btnWordFile_Click(object sender, RoutedEventArgs e)
         {
-
+            var allTest = ConnectionClass.connection.TestResult.ToList();
+            var application = new Word.Application();
+            Word.Document document = application.Documents.Add();
+            Word.Paragraph paragraph = document.Paragraphs.Add();
+            Word.Range range = paragraph.Range;
+            range.Text = "Результат тестирования";
+            range.InsertParagraphAfter();
+            Word.Paragraph tableParagraph = document.Paragraphs.Add();
+            Word.Range tableRange = tableParagraph.Range;
+            Word.Table table = document.Tables.Add(tableRange, allTest.Count() + 1, 5);
+            table.Borders.InsideLineStyle = table.Borders.OutsideLineStyle
+                    = Word.WdLineStyle.wdLineStyleSingle;
+            table.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+            Word.Range cellRange;
+            cellRange = table.Cell(1, 1).Range;
+            cellRange.Text = "Имя и фамилия";
+            cellRange = table.Cell(1, 2).Range;
+            cellRange.Text = "Наименование теста";
+            cellRange = table.Cell(1, 3).Range;
+            cellRange.Text = "Время прохождения";
+            cellRange = table.Cell(1, 4).Range;
+            cellRange.Text = "Оценка";
+            cellRange = table.Cell(1, 5).Range;
+            cellRange.Text = "Дата прохождения";
+            for (int i = 0; i < allTest.Count; i++)
+            {
+                var currentResult = allTest[i];
+                cellRange = table.Cell(i + 2, 1).Range;
+                cellRange.Text = currentResult.NameSurname;
+                cellRange = table.Cell(i + 2, 2).Range;
+                cellRange.Text = currentResult.Test.Title;
+                cellRange = table.Cell(i + 2, 3).Range;
+                cellRange.Text = currentResult.Time.ToString();
+                cellRange = table.Cell(i + 2, 4).Range;
+                cellRange.Text = currentResult.CorrectAnswers.ToString();
+                cellRange = table.Cell(i + 2, 5).Range;
+                cellRange.Text = currentResult.DateOfPassage.ToString();
+            }
+            application.Visible = true;
         }
 
-        private void btnExcelFile_Click(object sender, RoutedEventArgs e)
+        private void SearchResult()
         {
-
+            var result = ConnectionClass.connection.TestResult.ToList();
+            result = result.Where(x => x.Surname.ToLower().Contains(txbSearchSurname.Text.ToLower())).ToList();
+            result = result.Where(x => x.Name.ToLower().Contains(txbSearchName.Text.ToLower())).ToList();
+            dgInfoResult.ItemsSource = result;
         }
     }
 }

@@ -23,7 +23,9 @@
                     Margin="10">
             <TextBlock Style="{DynamicResource txbEnter}"
                        FontSize="24">Результаты теста:</TextBlock>
+
             <DataGrid CellStyle="{DynamicResource DataGridCellStyle}" Margin="0,20,0,0"
+                      Height="350"
                       AutoGenerateColumns="False"
                       x:Name="dgInfoResult"
                       GridLinesVisibility="Horizontal"
@@ -32,15 +34,30 @@
                       Background="{DynamicResource MainColor}"
                       FontSize="16"
                       ColumnHeaderStyle="{DynamicResource dgModernTheme}"
-                      IsReadOnly="True">
+                      IsReadOnly="True"
+                      ScrollViewer.CanContentScroll="True" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Студент"
+                    <DataGridTemplateColumn Header="Имя"
                                             Width="*"
                                             MinWidth="200">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock FontSize="20"
-                                           Text="{Binding Path=NameSurname}"
+                                           Text="{Binding Path=Name}"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Фамилия"
+                                            Width="*"
+                                            MinWidth="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="20"
+                                           Text="{Binding Path=Surname}"
                                            TextWrapping="Wrap"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"/>
@@ -165,14 +182,9 @@
                 <materialDesign:PackIcon Kind="FileWord"
                                      Width="40"
                                      Height="40"/>
-            </Button>
-            <Button Style="{DynamicResource btnEnter}"
-                    x:Name="btnExcelFile"
-                    Click="btnExcelFile_Click"
-                    Margin="10,0,0,0">
-                <materialDesign:PackIcon Kind="FileExcel"
-                                     Width="40"
-                                     Height="40"/>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource tltpElement}">Экспорт в Word</ToolTip>
+                </Button.ToolTip>
             </Button>
         </StackPanel>
     </Grid>
