@@ -46,8 +46,19 @@ namespace TextBook.Pages
 
         private void lvTest_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Properties.Settings.Default.TitleTest = labelTitle.Text;
-            FrameClass.mainFrame.Navigate(new RegistrationPage());
+            if (Properties.Settings.Default.AdminStatus == true)
+            {
+                Properties.Settings.Default.TitleTest = labelTitle.Text;
+                var testId = ConnectionClass.connection.Test.FirstOrDefault(x => x.Title == labelTitle.Text);
+                Properties.Settings.Default.IdExistingTest = testId.IdTest;
+                FrameClass.mainFrame.Navigate(new CreateTestPage());
+            }
+            else
+            {
+                Properties.Settings.Default.TitleTest = labelTitle.Text;
+                FrameClass.mainFrame.Navigate(new RegistrationPage());
+            }
+            
         }
 
         private void GotFocusAnimation(TextBlock textblock)
@@ -70,14 +81,6 @@ namespace TextBook.Pages
                 textVisible.FontSize = 18;
                 textBox.Text = null;
             }
-        }
-
-        private void btnUpdateTest_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.TitleTest = labelTitle.Text;
-            var testId = ConnectionClass.connection.Test.FirstOrDefault(x => x.Title == labelTitle.Text);
-            Properties.Settings.Default.IdExistingTest = testId.IdTest;
-            FrameClass.mainFrame.Navigate(new CreateTestPage());
         }
 
         private void btnAddTest_Click(object sender, RoutedEventArgs e) { Properties.Settings.Default.IdExistingTest = 0; FrameClass.mainFrame.Navigate(new CreateTestPage()); }

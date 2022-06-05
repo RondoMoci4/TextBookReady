@@ -38,16 +38,19 @@ namespace TextBook.Pages
 
         private void lvTheme_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Properties.Settings.Default.TitleTheme = labelTitle.Text;
-            FrameClass.mainFrame.Navigate(new ContentPage());
-        }
-
-        private void btnUpdateTheme_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.TitleTheme = labelTitle.Text;
-            var themeId = ConnectionClass.connection.Theme.FirstOrDefault(x => x.Title == labelTitle.Text);
-            Properties.Settings.Default.IdExistingTheme = themeId.idTheme;
-            FrameClass.mainFrame.Navigate(new AddContentPage());
+            if(Properties.Settings.Default.AdminStatus == true)
+            {
+                Properties.Settings.Default.TitleTheme = labelTitle.Text;
+                var themeId = ConnectionClass.connection.Theme.FirstOrDefault(x => x.Title == labelTitle.Text);
+                Properties.Settings.Default.IdExistingTheme = themeId.idTheme;
+                FrameClass.mainFrame.Navigate(new AddContentPage());
+            }
+            else
+            {
+                Properties.Settings.Default.TitleTheme = labelTitle.Text;
+                FrameClass.mainFrame.Navigate(new ContentPage());
+            }
+            
         }
 
         private void btnAddTheme_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.Navigate(new AddContentPage()); }

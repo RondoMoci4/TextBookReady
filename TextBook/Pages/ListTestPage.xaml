@@ -46,24 +46,6 @@
                            Foreground="{DynamicResource MainColor}"
                            TextWrapping="Wrap"
                            Text="{Binding Title}"></TextBlock>
-                            <Button Grid.Row="1"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Margin="0,0,0,10"
-                        Style="{DynamicResource btnList}"
-                        Width="150"
-                        Height="25"
-                        x:Name="btnUpdateTest"
-                        Click="btnUpdateTest_Click"
-                        Visibility="{Binding Source={x:Static properties:Settings.Default},Path=AdminStatus,Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <StackPanel Orientation="Horizontal"
-                                Margin="0,0,20,0">
-                                    <materialDesign:PackIcon Kind="Update"
-                                                 VerticalAlignment="Center"/>
-                                    <TextBlock VerticalAlignment="Center"
-                                   Margin="10,0,0,2">Редактировать</TextBlock>
-                                </StackPanel>
-                            </Button>
                             <StackPanel Orientation="Vertical"
                             Grid.Row="1"
                             VerticalAlignment="Top"

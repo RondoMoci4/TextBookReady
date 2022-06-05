@@ -309,19 +309,6 @@
                         </Button>
                         <Button Style="{DynamicResource btnEnter}"
                                 Margin="10,0,0,0"
-                                x:Name="btnSaveImage"
-                                Click="btnSaveImage_Click"
-                                IsEnabled="False"
-                                Opacity="0.3">
-                            <materialDesign:PackIcon Kind="ContentSave"
-                                                         Width="40"
-                                                         Height="40"/>
-                            <Button.ToolTip>
-                                <ToolTip Style="{DynamicResource tltpElement}">Сохранить изображение</ToolTip>
-                            </Button.ToolTip>
-                        </Button>
-                        <Button Style="{DynamicResource btnEnter}"
-                                Margin="10,0,0,0"
                                 x:Name="btnAddImage"
                                 Click="btnAddImage_Click">
                             <materialDesign:PackIcon Kind="Add"

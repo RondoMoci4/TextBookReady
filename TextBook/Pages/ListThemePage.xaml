@@ -62,31 +62,14 @@
                                 <TextBlock FontSize="16"
                                Foreground="{DynamicResource MainColor}"
                                TextDecorations="Underline">Описание:</TextBlock>
-                                <TextBlock FontSize="16"
+                                <TextBlock FontSize="12"
+                                           VerticalAlignment="Bottom"
                                Foreground="{DynamicResource MainColor}"
                                Margin="10,0,0,0"
                                TextWrapping="Wrap"
-                               Width="310"
+                               Width="250"
                                            Text="{Binding Description}"></TextBlock>
                             </StackPanel>
-                            <Button Grid.Row="1"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Margin="0,0,0,10"
-                        Style="{DynamicResource btnList}"
-                        Width="150"
-                        Height="25"
-                        x:Name="btnUpdateTheme"
-                        Click="btnUpdateTheme_Click"
-                        Visibility="{Binding Source={x:Static properties:Settings.Default},Path=AdminStatus,Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <StackPanel Orientation="Horizontal"
-                                Margin="0,0,20,0">
-                                    <materialDesign:PackIcon Kind="Update"
-                                                 VerticalAlignment="Center"/>
-                                    <TextBlock VerticalAlignment="Center"
-                                   Margin="10,0,0,2">Редактировать</TextBlock>
-                                </StackPanel>
-                            </Button>
                         </Grid>
                     </Border>
                 </DataTemplate>

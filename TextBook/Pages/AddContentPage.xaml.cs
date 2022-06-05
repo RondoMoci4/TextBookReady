@@ -51,6 +51,7 @@ namespace TextBook.Pages
                 btnSaveTheme.Opacity = 1; btnSaveTheme.IsEnabled = true;
                 btnListTest.Opacity = 1; btnListTest.IsEnabled = true;
                 btnListImage.IsEnabled = true; btnListImage.Opacity = 1;
+                btnBindTest.IsEnabled = false; btnBindTest.Opacity = 0.3;
                 Existing = true;
                 LoadTheme();
             }
@@ -94,7 +95,7 @@ namespace TextBook.Pages
             TextRange description = new TextRange(prgDescriptionTheme.ContentStart, prgDescriptionTheme.ContentEnd);
             if (Existing == false)
             {
-                if (!String.IsNullOrWhiteSpace(title.Text))
+                if (title.Text != "Введите наименование темы")
                 {
                     byte[] data = Encoding.UTF8.GetBytes(path);
                     Theme theme = new Theme()
@@ -108,9 +109,7 @@ namespace TextBook.Pages
                     var idTheme = ConnectionClass.connection.Theme.FirstOrDefault(x => x.Title == title.Text);
                     id = idTheme.idTheme;
                     btnDeleteTheme.IsEnabled = true; btnDeleteTheme.Opacity = 1;
-                    rtbTheme.Document.Blocks.Clear();
                     btnListImage.IsEnabled = true; btnListImage.Opacity = 1;
-                    title.Text = "";
                     btnSaveTheme.Opacity = 0.3; btnSaveTheme.IsEnabled = false;
                     btnListTest.Opacity = 1;btnListTest.IsEnabled = true;
                 }
@@ -118,7 +117,7 @@ namespace TextBook.Pages
             }
             else
             {
-                if (!String.IsNullOrWhiteSpace(title.Text))
+                if (title.Text != "Введите наименование темы")
                 {
                     TextRange text = new TextRange(prgTextTheme.ContentStart,prgTextTheme.ContentEnd);
                     byte[] data = Encoding.UTF8.GetBytes(text.Text);
@@ -129,8 +128,6 @@ namespace TextBook.Pages
                     ConnectionClass.connection.SaveChanges();
                     btnDeleteTheme.IsEnabled = true;
                     btnDeleteTheme.Opacity = 1;
-                    rtbTheme.Document.Blocks.Clear();
-                    title.Text = "";
                     btnSaveTheme.Opacity = 0.3; btnSaveTheme.IsEnabled = false;
                 }
                 else { MessageBox.Show("Введите наименование темы"); }
@@ -153,7 +150,8 @@ namespace TextBook.Pages
             }
             ConnectionClass.connection.SaveChanges();
             btnSaveTheme.Opacity = 0.3; btnSaveTheme.IsEnabled = false;
-
+            btnDeleteTheme.Opacity = 0.3; btnDeleteTheme.IsEnabled = false;
+            FrameClass.mainFrame.Navigate(new ListThemePage());
         }
         private void btnBindTest_Click(object sender, RoutedEventArgs e)
         {
@@ -283,26 +281,45 @@ namespace TextBook.Pages
             {
                 Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG"
             };
-
-            if (open.ShowDialog() == true)
+            if (txbIdImage.Text == "")
             {
                 if (!String.IsNullOrWhiteSpace(txbTitleImage.Text))
                 {
-                    byte[] imageData = File.ReadAllBytes(open.FileName);
-                    ImageTheme theme = new ImageTheme()
+                    if (open.ShowDialog() == true)
                     {
-                        IdTheme = id,
-                        Image = imageData,
-                        Name = txbTitleImage.Text
-                    };
-                    ConnectionClass.connection.ImageTheme.Add(theme);
-                    ConnectionClass.connection.SaveChanges();
+                        byte[] imageData = File.ReadAllBytes(open.FileName);
+                        ImageTheme theme = new ImageTheme()
+                        {
+                            IdTheme = id,
+                            Image = imageData,
+                            Name = txbTitleImage.Text
+                        };
+                        ConnectionClass.connection.ImageTheme.Add(theme);
+                        ConnectionClass.connection.SaveChanges();
+                        txbTitleImage.Clear();
+                    }
                 }
                 else { MessageBox.Show("Введите название изображения"); }
             }
-            ListImage();
-            btnSaveImage.IsEnabled = true; btnSaveImage.Opacity = 1;
-            btnDeleteImage.IsEnabled = true; btnDeleteImage.Opacity = 1;
+            else
+            {
+                int id = Convert.ToInt32(txbIdImage.Text);
+                var idImage = ConnectionClass.connection.ImageTheme.FirstOrDefault(x => x.IdImage == id);
+                if (!String.IsNullOrWhiteSpace(txbTitleImage.Text))
+                {
+                    MessageBox.Show(Properties.Settings.Default.IdExistingTheme.ToString());
+                    if (open.ShowDialog() == true)
+                    {
+                        byte[] imageData = File.ReadAllBytes(open.FileName);
+                        idImage.Image = imageData;
+                        idImage.Name = txbTitleImage.Text;
+                        ConnectionClass.connection.SaveChanges();
+                        txbTitleImage.Clear();
+                    }
+                }
+                else { MessageBox.Show("Введите название изображения"); }
+            }
+            ListImage(); 
         }
 
         private void ListImage()
@@ -311,30 +328,6 @@ namespace TextBook.Pages
             List<ImageTheme> themes = ConnectionClass.connection.ImageTheme.Where(x => x.IdTheme == id).ToList();
             maxImage = themes.Count;
             lbImage.ItemsSource = themes.Skip((currentImage - 1) * countInImage).Take(countInImage).ToList();
-        }
-
-        private void btnSaveImage_Click(object sender, RoutedEventArgs e)
-        {
-            int id = Convert.ToInt32(txbIdImage.Text);
-            var image = ConnectionClass.connection.ImageTheme.FirstOrDefault(x => x.IdImage == id);
-            OpenFileDialog open = new OpenFileDialog
-            {
-                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG"
-            };
-
-            if (open.ShowDialog() == true)
-            {
-                if (!String.IsNullOrWhiteSpace(txbTitleImage.Text))
-                {
-                    byte[] imageData = File.ReadAllBytes(open.FileName);
-                    image.IdTheme = id;
-                    image.Image = imageData;
-                    image.Name = txbTitleImage.Text;
-                    ConnectionClass.connection.SaveChanges();
-                }
-                else { MessageBox.Show("Введите название изображения"); }
-            }
-            ListImage();
         }
 
         private void btnDeleteImage_Click(object sender, RoutedEventArgs e)
@@ -378,18 +371,9 @@ namespace TextBook.Pages
             else { currentImage = 1; ListImage(); }
         }
 
-        private void btnBackImage_Click(object sender, RoutedEventArgs e)
-        {
-            //if (currentImage != 1)
-            //{
-            //    currentImage--;
-            //    ListImage();
-            //}
-            //else { currentImage = 1; btnBackImage.Opacity = 0.3; }
-        }
-
         private void lbImage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            btnDeleteImage.Opacity = 1; btnDeleteImage.IsEnabled = true;
             int id = Convert.ToInt32(txbIdImage.Text);
             var image = ConnectionClass.connection.ImageTheme.FirstOrDefault(x => x.IdImage == id);
             GotFocusAnimation(txbVisibleImage);
