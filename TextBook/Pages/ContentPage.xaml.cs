@@ -36,7 +36,8 @@ namespace TextBook.Pages
             prTheme.Inlines.Add(texttheme);
             if (test == null) { btnTestTheme.Opacity = 0.3; btnTestTheme.IsEnabled = false; }
             else { btnTestTheme.Opacity = 1; btnTestTheme.IsEnabled = true; var title = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == test.Test); titleTest = title.Title; }
-            if (imageTheme == null) { stplImage.Visibility = Visibility.Hidden; } else { ListImage(); stplImage.Visibility = Visibility.Visible; }
+            if (imageTheme == null) { stplImage.Visibility = Visibility.Hidden; } 
+            else { ListImage(); stplImage.Visibility = Visibility.Visible; }
             
         }
 
@@ -64,7 +65,6 @@ namespace TextBook.Pages
             {
                 lbl_Status.Content = "Введите текст для поиска";
             }
-
             else
             {
                 Regex regex = new Regex(searchText);

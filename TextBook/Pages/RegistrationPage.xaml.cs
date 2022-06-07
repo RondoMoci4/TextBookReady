@@ -19,31 +19,21 @@ namespace TextBook.Pages
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+            DoubleAnimation anim = new DoubleAnimation();
+            anim.From = 0;
+            anim.To = 50;
+            anim.Duration = TimeSpan.FromSeconds(1);
+            brdInfo.BeginAnimation(HeightProperty, anim);
             if (txbName.Text == "Введите имя" && txbSurname.Text == "Введите фамилию")
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 50;
-                anim.Duration = TimeSpan.FromSeconds(1);
-                brdInfo.BeginAnimation(HeightProperty, anim);
                 txbInfoRegistration.Text = "Введите имя и фамилию";
             }
             else if (txbSurname.Text == "Введите фамилию")
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 50;
-                anim.Duration = TimeSpan.FromSeconds(1);
-                brdInfo.BeginAnimation(HeightProperty, anim);
                 txbInfoRegistration.Text = "Введите фамилию";
             }
             else if (txbName.Text == "Введите имя")
             {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 50;
-                anim.Duration = TimeSpan.FromSeconds(1);
-                brdInfo.BeginAnimation(HeightProperty, anim);
                 txbInfoRegistration.Text = "Введите имя";
             }
             else

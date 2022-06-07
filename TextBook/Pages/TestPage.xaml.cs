@@ -89,8 +89,6 @@ namespace TextBook.Pages
                     
                     txbTextQuestion.Text = ConnectionClass.connection.TestQuestion.Where(x => x.IdQuestion == numberQuestion).Select(x => x.TitleQuestion).FirstOrDefault();
                     ImageQuestion(txbTextQuestion.Text);
-                    MessageBox.Show(txbTextQuestion.Text);
-                    
                 }
                 
             }

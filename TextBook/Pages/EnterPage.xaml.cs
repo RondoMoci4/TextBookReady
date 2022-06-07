@@ -17,45 +17,23 @@ namespace TextBook.Pages
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            if (txbLogin.Text == "" && psbPassword.Password == "")
-            {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 50;
-                anim.Duration = TimeSpan.FromSeconds(1);
-                brdInfo.BeginAnimation(HeightProperty, anim);
-                txbInfoEnter.Text = "Введите логин и пароль";
-            }
-            else if (psbPassword.Password == "")
-            {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 50;
-                anim.Duration = TimeSpan.FromSeconds(1);
-                brdInfo.BeginAnimation(HeightProperty, anim);
-                txbInfoEnter.Text = "Введите пароль";
-            }
-            else if (txbLogin.Text == "") 
-            {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 50;
-                anim.Duration = TimeSpan.FromSeconds(1);
-                brdInfo.BeginAnimation(HeightProperty, anim);
-                txbInfoEnter.Text = "Введите логин";
-            }
+            DoubleAnimation anim = new DoubleAnimation();
+            anim.From = 0;
+            anim.To = 50;
+            anim.Duration = TimeSpan.FromSeconds(1);
+            brdInfo.BeginAnimation(HeightProperty, anim);
+            if (String.IsNullOrWhiteSpace(txbLogin.Text) && String.IsNullOrWhiteSpace(psbPassword.Password))
+            { txbInfoEnter.Text = "Введите логин и пароль"; }
+            else if (String.IsNullOrWhiteSpace(psbPassword.Password))
+            { txbInfoEnter.Text = "Введите пароль"; }
+            else if (String.IsNullOrWhiteSpace(txbLogin.Text))
+            { txbInfoEnter.Text = "Введите логин"; }
             else
             {
-                var enter = ConnectionClass.connection.Autorization.FirstOrDefault(x => x.Password == psbPassword.Password && x.Login == txbLogin.Text);
+                var enter = ConnectionClass.connection.Autorization.FirstOrDefault(x => x.Password == 
+                psbPassword.Password && x.Login == txbLogin.Text);
                 if (enter == null)
-                {
-                    DoubleAnimation anim = new DoubleAnimation();
-                    anim.From = 0;
-                    anim.To = 50;
-                    anim.Duration = TimeSpan.FromSeconds(1);
-                    brdInfo.BeginAnimation(HeightProperty, anim);
-                    txbInfoEnter.Text = "Неверный логин или пароль";
-                }
+                { txbInfoEnter.Text = "Неверный логин или пароль"; }
                 else
                 {
                     Properties.Settings.Default.AdminStatus = true;

@@ -71,8 +71,6 @@ namespace TextBook.Pages
 
             if (ofd.ShowDialog() == true)
             {
-
-                
                 using (FileStream fs = new FileStream(ofd.FileName, FileMode.Open))
                 {
                     if (System.IO.Path.GetExtension(ofd.FileName).ToLower() == ".rtf")
