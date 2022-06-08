@@ -10,102 +10,124 @@
       Title="Авторизация администратора">
     <Border Style="{DynamicResource brdDarkLight}"
             CornerRadius="0,0,0,0">
-        <StackPanel HorizontalAlignment="Center"
+        <Grid>
+            <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Orientation="Vertical"
                     Margin="0,0,0,0">
-            <Border CornerRadius="10"
+                <Border CornerRadius="10"
                 Style="{DynamicResource brdEnter}"
                 Width="Auto"
                 Height="Auto"
                 BorderThickness="1.5">
-                <Grid Margin="15">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal"
+                    <Grid Margin="15">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                     Margin="0,0,35,0">
-                            <TextBlock FontSize="24"
+                                <TextBlock FontSize="24"
                                    Style="{DynamicResource txbEnter}">
                             <materialDesign:PackIcon Kind="Face"
                                                      Width="30"
                                                      Height="30"/>
-                            </TextBlock>
-                            <TextBox Style="{DynamicResource txbModernStyle}" x:Name="txbLogin"
+                                </TextBlock>
+                                <TextBox Style="{DynamicResource txbModernStyle}" x:Name="txbLogin"
                                  Width="200"
                                  Height="30"
                                  Margin="10,0,0,0"
                                  FontSize="16"
                                      GotFocus="txbLogin_GotFocus" 
                                      LostFocus="txbLogin_LostFocus"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal"
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="0,20,0,0"
                                 Panel.ZIndex="2">
-                            <TextBlock FontSize="16"
+                                <TextBlock FontSize="16"
                                    Style="{DynamicResource txbEnter}">
                             <materialDesign:PackIcon Kind="Password"
                                                      Width="30"
                                                      Height="30"/>
-                            </TextBlock>
-                            <PasswordBox Style="{DynamicResource psbStyle}" x:Name="psbPassword"
+                                </TextBlock>
+                                <PasswordBox Style="{DynamicResource psbStyle}" x:Name="psbPassword"
                                      Width="200"
                                      Height="30"
                                      Margin="10,0,0,0"
                                      FontSize="16" GotFocus="psbPassword_GotFocus" LostFocus="psbPassword_LostFocus"/>
-                            <CheckBox VerticalAlignment="Center"
+                                <CheckBox VerticalAlignment="Center"
                                       Margin="10,0,0,0"
                                       Style="{DynamicResource chbPassword}"
                                       x:Name="chkbPassword"
                                       Checked="chkbPassword_Checked"
                                       Unchecked="chkbPassword_Unchecked">
-                                <materialDesign:PackIcon Kind="Eye"
+                                    <materialDesign:PackIcon Kind="Eye"
                                                          Width="25"
                                                          Height="25"/>
-                                <CheckBox.ToolTip>
-                                    <ToolTip Style="{DynamicResource tltpElement}">
-                                        Показать пароль
-                                    </ToolTip>
-                                </CheckBox.ToolTip>
-                            </CheckBox>
-                        </StackPanel>
-                        <Button x:Name="btnEnter"
+                                    <CheckBox.ToolTip>
+                                        <ToolTip Style="{DynamicResource tltpElement}">
+                                            Показать пароль
+                                        </ToolTip>
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center">
+                                <Button x:Name="btnEnter"
                             Margin="0,20,0,0"
                             Width="150"
                             Height="45"
                             Style="{DynamicResource btnEnter}"
                             Click="btnEnter_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock>
                                 <materialDesign:PackIcon Kind="Login"
                                                          Width="30"
                                                          Height="30"/>
-                                </TextBlock>
-                                <TextBlock Text="Войти"
+                                        </TextBlock>
+                                        <TextBlock Text="Войти"
                                        FontSize="18"
                                        Margin="0,2,0,0"
                                            />
+                                    </StackPanel>
+                                </Button>
+                                 <Button Grid.Row="2"
+                Style="{DynamicResource btnEnter}"
+                Width="45"
+                Height="45"
+                HorizontalAlignment="Left"
+                Margin="10,0,0,0"
+                x:Name="btnBackToList"
+                Click="btnBackToList_Click"
+                VerticalAlignment="Bottom">
+            <materialDesign:PackIcon Kind="Close"
+                                     Width="40"
+                                     Height="40"/>
+            <Button.ToolTip>
+                <ToolTip Style="{DynamicResource tltpElement}">Вернуться на главную страницу</ToolTip>
+            </Button.ToolTip>
+        </Button>
                             </StackPanel>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical"
+                            
+                            
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
                                 Margin="0,3,33,0"
                                 Panel.ZIndex="-1">
-                        <TextBlock Style="{DynamicResource txbEnter}"
+                            <TextBlock Style="{DynamicResource txbEnter}"
                                    FontSize="16"
                                    x:Name="txtLogin">
                             Введите логин
-                        </TextBlock>
-                        <TextBlock Style="{DynamicResource txbEnter}"
+                            </TextBlock>
+                            <TextBlock Style="{DynamicResource txbEnter}"
                                    FontSize="16"
                                    Margin="0,30,0,0"
                                    x:Name="txtPassword">
                             Введите пароль
-                        </TextBlock>
-                    </StackPanel>
-                    <TextBox Style="{DynamicResource txbModernStyle}"
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBox Style="{DynamicResource txbModernStyle}"
                              Width="200"
                              Height="30"
                              Margin="7,0,0,3"
@@ -114,22 +136,25 @@
                              Visibility="Hidden"
                              GotFocus="txbPassword_GotFocus"
                              LostFocus="txbPassword_LostFocus"/>
-                </Grid>
-            </Border>
-            <Border Width="280" 
+                    </Grid>
+                </Border>
+                <Border Width="280" 
                     Height="0"
                     Style="{DynamicResource brdEnter}"
                     BorderThickness="1,0,1,1"
                     CornerRadius="0,0,10,10"
                     x:Name="brdInfo">
-                <Grid Margin="10">
-                    <TextBlock x:Name="txbInfoEnter"
+                    <Grid Margin="10">
+                        <TextBlock x:Name="txbInfoEnter"
                                Style="{DynamicResource txbEnter}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="16"/>
-                </Grid>
-            </Border>
-        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            
+        </Grid>
+        
     </Border>
 </Page>

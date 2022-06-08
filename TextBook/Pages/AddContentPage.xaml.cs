@@ -66,7 +66,7 @@ namespace TextBook.Pages
             };
             OpenFileDialog ofd = new OpenFileDialog
             {
-                Filter = "RichText Files (*.rtf)|*.rtf|All files (*.*)|*.*"
+                Filter = "RichText Files (*.rtf)|*.rtf|Word FIles (*.docx*)|*.docx*|Text File (*.txt)|*.txt"
             };
 
             if (ofd.ShowDialog() == true)
@@ -377,5 +377,8 @@ namespace TextBook.Pages
             GotFocusAnimation(txbVisibleImage);
             txbTitleImage.Text = image.Name;
         }
+
+        private void btnBackToList_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.GoBack(); }
+
     }
 }

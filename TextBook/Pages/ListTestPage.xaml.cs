@@ -84,5 +84,8 @@ namespace TextBook.Pages
         }
 
         private void btnAddTest_Click(object sender, RoutedEventArgs e) { Properties.Settings.Default.IdExistingTest = 0; FrameClass.mainFrame.Navigate(new CreateTestPage()); }
+
+        private void btnBackToList_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.GoBack(); }
+
     }
 }

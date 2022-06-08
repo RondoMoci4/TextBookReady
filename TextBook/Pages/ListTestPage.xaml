@@ -18,7 +18,7 @@
         <ListView x:Name="lvTest"
                   Background="Transparent"
                   BorderThickness="0"
-                  Margin="10"
+                  Margin="10,10,10,70"
                   Grid.Row="1"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="lvTest_MouseDoubleClick">
             <ListView.ItemsPanel>
@@ -118,6 +118,23 @@
                 <materialDesign:PackIcon Kind="Create"/>
                 <TextBlock>Добавить тест</TextBlock>
             </StackPanel>
+        </Button>
+
+        <Button Grid.Row="2"
+                Style="{DynamicResource btnEnter}"
+                Width="45"
+                Height="45"
+                HorizontalAlignment="Left"
+                Margin="10,0,0,10"
+                x:Name="btnBackToList"
+                Click="btnBackToList_Click"
+                VerticalAlignment="Bottom">
+            <materialDesign:PackIcon Kind="Backspace"
+                                     Width="40"
+                                     Height="40"/>
+            <Button.ToolTip>
+                <ToolTip Style="{DynamicResource tltpElement}">Вернуться на главную страницу</ToolTip>
+            </Button.ToolTip>
         </Button>
     </Grid>
 </Page>

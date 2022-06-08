@@ -41,24 +41,43 @@
                                      GotFocus="txbSurname_GotFocus" 
                                      LostFocus="txbSurname_LostFocus">Введите фамилию</TextBox>
                         </StackPanel>
-                        <Button x:Name="btnRegistration"
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="btnRegistration"
                             Margin="0,20,0,0"
                             Width="250"
                             Height="45"
                             Style="{DynamicResource btnEnter}"
                             Click="btnRegister_Click">
-                            <StackPanel Orientation="Horizontal"
+                                <StackPanel Orientation="Horizontal"
                                         Margin="0,0,10,0">
-                                <TextBlock>
+                                    <TextBlock>
                                 <materialDesign:PackIcon Kind="Login"
                                                          Width="30"
                                                          Height="30"/>
-                                </TextBlock>
-                                <TextBlock Text="Зарегистрироваться"
+                                    </TextBlock>
+                                    <TextBlock Text="Зарегистрироваться"
                                        FontSize="18"
                                        Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Button>
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Row="2"
+                Style="{DynamicResource btnEnter}"
+                Width="45"
+                Height="45"
+                HorizontalAlignment="Left"
+                Margin="10,0,0,0"
+                x:Name="btnBackToList"
+                Click="btnBackToList_Click"
+                VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="Close"
+                                     Width="40"
+                                     Height="40"/>
+                                <Button.ToolTip>
+                                    <ToolTip Style="{DynamicResource tltpElement}">Вернуться на главную страницу</ToolTip>
+                                </Button.ToolTip>
+                            </Button>
+                        </StackPanel>
+                        
                     </StackPanel>
                 </Grid>
             </Border>

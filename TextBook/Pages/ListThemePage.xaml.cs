@@ -85,5 +85,7 @@ namespace TextBook.Pages
             }
         }
 
+        private void btnBackToList_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.GoBack(); }
+
     }
 }

@@ -67,5 +67,7 @@ namespace TextBook.Pages
             if (txbName.Text == "" || txbName.Text == " ")
                 txbName.Text = "Введите имя";
         }
+
+        private void btnBackToList_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.GoBack(); }
     }
 }

@@ -36,9 +36,9 @@ namespace TextBook.Pages
             prTheme.Inlines.Add(texttheme);
             if (test == null) { btnTestTheme.Opacity = 0.3; btnTestTheme.IsEnabled = false; }
             else { btnTestTheme.Opacity = 1; btnTestTheme.IsEnabled = true; var title = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == test.Test); titleTest = title.Title; }
-            if (imageTheme == null) { stplImage.Visibility = Visibility.Hidden; } 
+            if (imageTheme == null) { stplImage.Visibility = Visibility.Hidden; }
             else { ListImage(); stplImage.Visibility = Visibility.Visible; }
-            
+
         }
 
         private void btnTestTheme_Click(object sender, RoutedEventArgs e)
@@ -81,7 +81,7 @@ namespace TextBook.Pages
                     string parsedString = startPointer.GetTextInRun(LogicalDirection.Forward);
                     int indexOfParseString = parsedString.IndexOf(searchText);
 
-                    if (indexOfParseString >= 0) 
+                    if (indexOfParseString >= 0)
                     {
                         startPointer = startPointer.GetPositionAtOffset(indexOfParseString);
 
@@ -163,5 +163,7 @@ namespace TextBook.Pages
         }
 
         private void btnCloseVisibleImage_Click(object sender, RoutedEventArgs e) { imageVisible.Visibility = Visibility.Hidden; rtbTheme.Opacity = 1; }
+
+        private void btnBackToList_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.GoBack(); }
     }
 }

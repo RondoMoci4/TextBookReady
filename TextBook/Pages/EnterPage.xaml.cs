@@ -131,5 +131,7 @@ namespace TextBook.Pages
             psbPassword.Visibility = Visibility.Visible;
         }
 
+        private void btnBackToList_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.Navigate(new MainPage()); }
+
     }
 }

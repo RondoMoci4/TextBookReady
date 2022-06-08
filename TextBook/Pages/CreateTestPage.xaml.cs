@@ -640,5 +640,11 @@ namespace TextBook.Pages
                 ckbImage.Visibility = Visibility.Visible;
             }
         }
+
+        private void btnBackToList_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.GoBack(); }
+        
+
+        
+
     }
 }
