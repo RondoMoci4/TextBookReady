@@ -4,7 +4,7 @@
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <SolidColorBrush x:Key="MainColor" Color="White"/> <!--Основной цвет светлой темы-->
-    <SolidColorBrush x:Key="AdditionalColor" Color="#FF8B96D6"/> <!--Дополнительный цвет светлой темы-->
+    <SolidColorBrush x:Key="AdditionalColor" Color="#FF4554A7"/> <!--Дополнительный цвет светлой темы-->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <Style TargetType="{x:Type TextBlock}" x:Key="txbEnter">
         <Setter Property="Foreground" Value="{StaticResource AdditionalColor}"/>
