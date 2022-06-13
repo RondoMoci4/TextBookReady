@@ -19,7 +19,7 @@ namespace TextBook.Pages
     {
         TimeSpan timeTest = new TimeSpan(0, 0, 0);
         bool Existing;
-        int countQuestion = 0;
+        int countQuestion = 1;
         int idTest;
         public CreateTestPage()
         {
@@ -60,8 +60,7 @@ namespace TextBook.Pages
                                 {
                                     if (!String.IsNullOrWhiteSpace(txbTitleTest.Text))
                                     {
-                                        countQuestion++;
-                                        txbCountQuestion.Text = $"{countQuestion}";
+                                        txbCountQuestion.Text = $"{countQuestion + 1}";
                                         Test test = new Test()
                                         {
                                             Title = txbTitleTest.Text,
@@ -435,10 +434,11 @@ namespace TextBook.Pages
 
         private void btnDeleteQuestion_Click(object sender, RoutedEventArgs e)
         {
+           
             if (txbCountQuestion.Text != "1")
             {
-                int id = Convert.ToInt32(txbQuestionListBox.Text);
                 var test = ConnectionClass.connection.Test.FirstOrDefault(x => x.Title == txbTitleTest.Text);
+                int id = Convert.ToInt32(txbQuestionListBox.Text);
                 var question = ConnectionClass.connection.TestQuestion.FirstOrDefault(x => x.IdTest == test.IdTest && x.IdQuestion == id);
                 var answer = ConnectionClass.connection.TestAnswer.Where(x => x.IdQuestion == id).ToList();
                 test.CountQuestion = test.CountQuestion - 1;
@@ -447,9 +447,28 @@ namespace TextBook.Pages
                 ConnectionClass.connection.TestQuestion.Remove(question);
                 ConnectionClass.connection.SaveChanges();
                 UpdateListQuestion();
-                btnResetQuestion_Click(sender, e);
             }
-            else { MessageBox.Show("Нельзя удалить последний вопрос"); }
+            else
+            {
+                if (MessageBox.Show("Удалить данный тест?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                {
+                    var test = ConnectionClass.connection.Test.FirstOrDefault(x => x.Title == txbTitleTest.Text);
+                    int id = Convert.ToInt32(txbQuestionListBox.Text);
+                    var question = ConnectionClass.connection.TestQuestion.FirstOrDefault(x => x.IdTest == test.IdTest && x.IdQuestion == id);
+                    var answer = ConnectionClass.connection.TestAnswer.Where(x => x.IdQuestion == id).ToList();
+                    test.CountQuestion = test.CountQuestion - 1;
+                    txbCountQuestion.Text = test.CountQuestion.ToString();
+                    ConnectionClass.connection.TestAnswer.RemoveRange(answer);
+                    ConnectionClass.connection.TestQuestion.Remove(question);
+                    ConnectionClass.connection.Test.Remove(test);
+                    ConnectionClass.connection.SaveChanges();
+                    UpdateListQuestion();
+                    btnDeleteQuestion.IsEnabled = false; btnDeleteQuestion.Opacity = 0.3;
+                    MessageBox.Show("Тест удален!");
+                    FrameClass.mainFrame.Navigate(new ListTestPage()); ;
+                }
+                else { MessageBox.Show("Тест не удален!"); }
+            }
         }
 
         private void lbListQuestion_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -642,9 +661,13 @@ namespace TextBook.Pages
         }
 
         private void btnBackToList_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.GoBack(); }
-        
 
-        
+        private void Window(bool State)
+        {
+            if (State == true) { MessageBox.Show("Yes"); }
+            else { MessageBox.Show("No"); }
+        }
+
 
     }
 }

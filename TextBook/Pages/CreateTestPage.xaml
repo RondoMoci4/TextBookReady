@@ -14,7 +14,8 @@
             <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
             <StackPanel Margin="20,20,0,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
@@ -118,7 +119,8 @@
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal">
             <StackPanel x:Name="stackPanelOne"
-                        Margin="20,0,0,0">
+                        Margin="20,0,0,0"
+                        HorizontalAlignment="Center">
                 <TextBlock HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
                        FontSize="26"

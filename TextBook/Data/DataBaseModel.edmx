@@ -23,14 +23,14 @@
           <Property Name="IdImage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdTheme" Type="int" Nullable="false" />
           <Property Name="Image" Type="image" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
             <PropertyRef Name="IdTest" />
           </Key>
           <Property Name="IdTest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Time" Type="time" Precision="7" Nullable="false" />
           <Property Name="CountQuestion" Type="int" Nullable="false" />
           <Property Name="CreatorTest" Type="int" Nullable="false" />
@@ -71,7 +71,7 @@
             <PropertyRef Name="idTheme" />
           </Key>
           <Property Name="idTheme" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TextTheme" Type="varbinary(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
@@ -226,7 +226,7 @@
             <PropertyRef Name="IdTest" />
           </Key>
           <Property Name="IdTest" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
           <Property Name="CountQuestion" Type="Int32" Nullable="false" />
           <Property Name="CreatorTest" Type="Int32" Nullable="false" />
@@ -361,7 +361,7 @@
             <PropertyRef Name="idTheme" />
           </Key>
           <Property Name="idTheme" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TextTheme" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TopicTest" Relationship="DBTextBookModel.FK_TopicTest_Theme" FromRole="Theme" ToRole="TopicTest" />
@@ -408,7 +408,7 @@
           <Property Name="IdImage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdTheme" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Theme" Relationship="DBTextBookModel.FK_ImageTheme_Theme" FromRole="ImageTheme" ToRole="Theme" />
         </EntityType>
         <Association Name="FK_ImageTheme_Theme">

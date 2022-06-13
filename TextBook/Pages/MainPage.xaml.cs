@@ -10,10 +10,11 @@ namespace TextBook.Pages
     /// </summary>
     public partial class MainPage : Page
     {
-        public MainPage() { InitializeComponent(); }
+        public MainPage() { InitializeComponent();}
 
         private void btnListTest_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.Navigate(new ListTestPage()); }
 
         private void btnListTheme_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.Navigate(new ListThemePage()); }
+
     }
 }

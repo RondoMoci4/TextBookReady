@@ -30,17 +30,17 @@ public partial class TestResult
 
     public int CorrectAnswers { get; set; }
 
-
-    public string NameSurname
-        {
-            get { return $"{Name} {Surname}"; }
-        }
-
     public System.DateTime DateOfPassage { get; set; }
 
+        public string NameSurname
+        {
+            get
+            {
+                return $"{Name} {Surname}";
+            }
+        }
 
-
-    public virtual Test Test { get; set; }
+        public virtual Test Test { get; set; }
 
 }
 

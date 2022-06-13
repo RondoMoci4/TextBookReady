@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TextBook.Data;
+using Xceed.Words.NET;
 
 namespace TextBook.Pages
 {
@@ -71,19 +72,29 @@ namespace TextBook.Pages
 
             if (ofd.ShowDialog() == true)
             {
-                using (FileStream fs = new FileStream(ofd.FileName, FileMode.Open))
+                
+                if (System.IO.Path.GetExtension(ofd.FileName).ToLower() == ".docx")
                 {
-                    if (System.IO.Path.GetExtension(ofd.FileName).ToLower() == ".rtf")
-                        doc.Load(fs, DataFormats.Rtf); 
-                    else if (System.IO.Path.GetExtension(ofd.FileName).ToLower() == ".txt")
-                        doc.Load(fs, DataFormats.Text);
-                    else if (System.IO.Path.GetExtension(ofd.FileName).ToLower() == ".docx")
-                    {
-                        this.ReadDocx(ofd.FileName);
-                    }
-                    path = doc.Text;
-                    btnSaveTheme.IsEnabled = true; btnSaveTheme.Opacity = 1;
+                    string filename = ofd.FileName;
+                    doc.Text = filename;
+
+                    var document = DocX.Load(filename);
+
+                    string contents = document.Text;
+                    doc.Text = contents;
                 }
+                else
+                {
+                    using (FileStream fs = new FileStream(ofd.FileName, FileMode.Open))
+                    {
+                        if (System.IO.Path.GetExtension(ofd.FileName).ToLower() == ".rtf")
+                            doc.Load(fs, DataFormats.Rtf);
+                        else if (System.IO.Path.GetExtension(ofd.FileName).ToLower() == ".txt")
+                            doc.Load(fs, DataFormats.Text);
+                    }
+                }
+                path = doc.Text;
+                btnSaveTheme.IsEnabled = true; btnSaveTheme.Opacity = 1;
             }
         }
 
@@ -135,15 +146,17 @@ namespace TextBook.Pages
 
         private void btnDeleteTheme_Click(object sender, RoutedEventArgs e)
         {
-            var topicTest = ConnectionClass.connection.TopicTest.FirstOrDefault(x=>x.Theme == id);
+            var topicTest = ConnectionClass.connection.TopicTest.Where(x => x.Theme == id).ToList() ;
             var theme = ConnectionClass.connection.Theme.FirstOrDefault(x=> x.idTheme == id);
+            var image = ConnectionClass.connection.ImageTheme.Where(x => x.IdTheme == id).ToList();
             if (topicTest == null)
             {
                 ConnectionClass.connection.Theme.Remove(theme);
             }
             else
             {
-                ConnectionClass.connection.TopicTest.Remove(topicTest);
+                ConnectionClass.connection.ImageTheme.RemoveRange(image);
+                ConnectionClass.connection.TopicTest.RemoveRange(topicTest);
                 ConnectionClass.connection.Theme.Remove(theme);
             }
             ConnectionClass.connection.SaveChanges();

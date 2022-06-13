@@ -49,26 +49,28 @@
                 CornerRadius="10"
                 Background="{DynamicResource AdditionalColor}">
                         <Grid Margin="10">
-
-                            <TextBlock VerticalAlignment="Top"
+                            <StackPanel>
+                                <TextBlock VerticalAlignment="Top"
                            HorizontalAlignment="Center"
                            FontSize="18"
                            Foreground="{DynamicResource MainColor}"
-                           Text="{Binding Title}"></TextBlock>
-                            <StackPanel Orientation="Horizontal"
+                           Text="{Binding Title}"
+                                       TextWrapping="Wrap"></TextBlock>
+                                <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            Margin="40">
-                                <TextBlock FontSize="16"
+                            Margin="20">
+                                    <TextBlock FontSize="16"
                                Foreground="{DynamicResource MainColor}"
                                TextDecorations="Underline">Описание:</TextBlock>
-                                <TextBlock FontSize="12"
+                                    <TextBlock FontSize="12"
                                            VerticalAlignment="Bottom"
                                Foreground="{DynamicResource MainColor}"
                                Margin="10,0,0,0"
                                TextWrapping="Wrap"
                                Width="250"
                                            Text="{Binding Description}"></TextBlock>
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
                     </Border>

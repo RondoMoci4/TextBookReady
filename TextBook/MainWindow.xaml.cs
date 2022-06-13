@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using TextBook.Data;
 using TextBook.Pages;
+using TextBook.Properties;
 
 namespace TextBook
 {
