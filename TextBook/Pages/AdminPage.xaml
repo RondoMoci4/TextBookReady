@@ -25,7 +25,7 @@
                        FontSize="24">Результаты теста:</TextBlock>
 
             <DataGrid CellStyle="{DynamicResource DataGridCellStyle}" Margin="0,20,0,0"
-                      Height="350"
+                      Height="Auto"
                       AutoGenerateColumns="False"
                       x:Name="dgInfoResult"
                       GridLinesVisibility="Horizontal"
@@ -171,6 +171,13 @@
                              LostFocus="txbSearchSurname_LostFocus" TextChanged="txbSearchSurname_TextChanged"></TextBox>
                 </Grid>
             </UserControl>
+            <ComboBox Style="{DynamicResource ComboBoxFlatStyle}"
+                      Margin="10,0,0,0"
+                      x:Name="cmbTest"
+                      DisplayMemberPath="Title"
+                      Width="200" 
+                      SelectionChanged="cmbTest_SelectionChanged"
+                      FontSize="18"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Right"
                     VerticalAlignment="Center"

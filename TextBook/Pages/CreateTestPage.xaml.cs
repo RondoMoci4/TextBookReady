@@ -19,7 +19,7 @@ namespace TextBook.Pages
     {
         TimeSpan timeTest = new TimeSpan(0, 0, 0);
         bool Existing;
-        int countQuestion = 1;
+        int countQuestion = 0;
         int idTest;
         public CreateTestPage()
         {
@@ -70,9 +70,9 @@ namespace TextBook.Pages
                                         };
                                         ConnectionClass.connection.Test.Add(test);
                                         ConnectionClass.connection.SaveChanges();
-
+                                        
                                         var lastTest = ConnectionClass.connection.Test.FirstOrDefault(x => x.Title == txbTitleTest.Text);
-
+                                        idTest = lastTest.IdTest;
                                         TestQuestion question = new TestQuestion()
                                         {
                                             IdTest = lastTest.IdTest,
@@ -214,13 +214,14 @@ namespace TextBook.Pages
                             {
                                 if (!String.IsNullOrWhiteSpace(txbTitleTest.Text))
                                 {
-                                    var test = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == Properties.Settings.Default.IdExistingTest);
+                                    if (Properties.Settings.Default.IdExistingTest != 0) { idTest = Properties.Settings.Default.IdExistingTest; }
+                                    var test = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == idTest);
 
                                     countQuestion++;
                                     txbCountQuestion.Text = $"{test.CountQuestion + countQuestion}";
                                     test.CountQuestion = test.CountQuestion + countQuestion;
                                     ConnectionClass.connection.SaveChanges();
-                                    var lastTest = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == Properties.Settings.Default.IdExistingTest);
+                                    var lastTest = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == idTest);
 
                                     TestQuestion question = new TestQuestion()
                                     {
@@ -358,9 +359,12 @@ namespace TextBook.Pages
                             if (!String.IsNullOrWhiteSpace(txbTitleTest.Text))
                             {
                                 int id = Convert.ToInt32(txbQuestionListBox.Text);
-                                var test = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == Properties.Settings.Default.IdExistingTest);
-                                var question = ConnectionClass.connection.TestQuestion.FirstOrDefault(x => x.IdTest == test.IdTest && x.IdQuestion == id);
-                                var answer = ConnectionClass.connection.TestAnswer.Where(x => x.IdQuestion == question.IdQuestion).ToList();
+                                MessageBox.Show(idTest.ToString());
+                                if (Properties.Settings.Default.IdExistingTest != 0) { idTest = Properties.Settings.Default.IdExistingTest; }
+                                var test = ConnectionClass.connection.Test.FirstOrDefault(x => x.IdTest == idTest);
+                                var question = ConnectionClass.connection.TestQuestion.FirstOrDefault(x =>x.IdTest == idTest && x.IdQuestion == id);
+                                int que = question.IdQuestion;
+                                var answer = ConnectionClass.connection.TestAnswer.Where(x => x.IdQuestion == que).ToList();
                                 List<int> answerInt = new List<int>(answer.Select(x => x.IdAnswer));
                                 int one = answerInt[0];
                                 int two = answerInt[1];
@@ -380,37 +384,38 @@ namespace TextBook.Pages
                                 var answerTwo = ConnectionClass.connection.TestAnswer.FirstOrDefault(x => x.IdAnswer == two);
                                 if (rbTwoAnswer.IsChecked == true)
                                 {
-                                    answerTwo.Answer = txbAnswerOne.Text;
+                                    answerTwo.Answer = txbAnswerTwo.Text;
                                     answerTwo.Correct = true;
                                 }
                                 else
                                 {
-                                    answerTwo.Answer = txbAnswerOne.Text;
+                                    answerTwo.Answer = txbAnswerTwo.Text;
                                     answerTwo.Correct = false;
                                 }
                                 var answerThree = ConnectionClass.connection.TestAnswer.FirstOrDefault(x => x.IdAnswer == three);
                                 if (rbThreeAnswer.IsChecked == true)
                                 {
-                                    answerThree.Answer = txbAnswerOne.Text;
+                                    answerThree.Answer = txbAnswerThree.Text;
                                     answerThree.Correct = true;
                                 }
                                 else
                                 {
-                                    answerThree.Answer = txbAnswerOne.Text;
+                                    answerThree.Answer = txbAnswerThree.Text;
                                     answerThree.Correct = false;
                                 }
                                 var answerFour = ConnectionClass.connection.TestAnswer.FirstOrDefault(x => x.IdAnswer == four);
                                 if (rbFourAnswer.IsChecked == true)
                                 {
-                                    answerFour.Answer = txbAnswerOne.Text;
+                                    answerFour.Answer = txbAnswerFour.Text;
                                     answerOne.Correct = true;
                                 }
                                 else
                                 {
-                                    answerFour.Answer = txbAnswerOne.Text;
+                                    answerFour.Answer = txbAnswerFour.Text;
                                     answerFour.Correct = false;
                                 }
                                 question.TitleQuestion = txbQuestion.Text;
+                                MessageBox.Show(TimeSpan.Parse(txbTime.Text).ToString());
                                 test.Time = TimeSpan.Parse(txbTime.Text);
                                 test.Title = txbTitleTest.Text;
                                 test.CountQuestion = Convert.ToInt32(txbCountQuestion.Text);

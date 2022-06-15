@@ -19,6 +19,13 @@ namespace TextBook.Pages
             InitializeComponent();
             ConnectionClass.connection = new DBTextBookEntities();
             SearchResult();
+            var test = ConnectionClass.connection.Test.ToList();
+            test.Insert(0, new Test
+            {
+                Title = "Все тесты"
+            });
+            cmbTest.ItemsSource = test;
+            cmbTest.SelectedIndex = 0;
         }
 
         private void btnCreateTest_Click(object sender, RoutedEventArgs e) { FrameClass.mainFrame.Navigate(new ListTestPage()); }
@@ -74,19 +81,41 @@ namespace TextBook.Pages
                     = Word.WdLineStyle.wdLineStyleSingle;
             table.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
             Word.Range cellRange;
-            cellRange = table.Cell(1, 1).Range; cellRange = table.Cell(1, 2).Range;
-            cellRange.Text = "Имя и фамилия"; cellRange.Text = "Наименование теста";
-            cellRange = table.Cell(1, 3).Range; cellRange = table.Cell(1, 4).Range;
-            cellRange.Text = "Время прохождения"; cellRange.Text = "Оценка";
+            cellRange = table.Cell(1, 1).Range; cellRange.Text = "Имя и фамилия";
+            cellRange = table.Cell(1, 2).Range; cellRange.Text = "Наименование теста";
+            cellRange = table.Cell(1, 3).Range; cellRange.Text = "Время прохождения";
+            cellRange = table.Cell(1, 4).Range; cellRange.Text = "Оценка";
             cellRange = table.Cell(1, 5).Range; cellRange.Text = "Дата прохождения";
-            for (int i = 0; i < allTest.Count; i++)
+            if (cmbTest.SelectedIndex > 0)
             {
-                var currentResult = allTest[i];
-                cellRange = table.Cell(i + 2, 1).Range; cellRange.Text = currentResult.NameSurname;
-                cellRange = table.Cell(i + 2, 2).Range; cellRange.Text = currentResult.Test.Title;
-                cellRange = table.Cell(i + 2, 3).Range; cellRange.Text = currentResult.Time.ToString();
-                cellRange = table.Cell(i + 2, 4).Range; cellRange.Text = currentResult.CorrectAnswers.ToString();
-                cellRange = table.Cell(i + 2, 5).Range; cellRange.Text = currentResult.DateOfPassage.ToString();
+                allTest = allTest.Where(x => x.Test.Equals(cmbTest.SelectedItem as Test)).ToList();
+                if (allTest.Count != 0)
+                {
+                    for (int i = 0; i < allTest.Count; i++)
+                    {
+                        var currentResult = allTest[i];
+                        cellRange = table.Cell(i + 2, 1).Range; cellRange.Text = currentResult.NameSurname;
+                        cellRange = table.Cell(i + 2, 2).Range; cellRange.Text = currentResult.Test.Title;
+                        cellRange = table.Cell(i + 2, 3).Range; cellRange.Text = currentResult.Time.ToString();
+                        cellRange = table.Cell(i + 2, 4).Range; cellRange.Text = currentResult.CorrectAnswers.ToString();
+                        cellRange = table.Cell(i + 2, 5).Range; cellRange.Text = currentResult.DateOfPassage.ToString();
+                    }
+                }
+                else { MessageBox.Show("Данные о результатах теста отсутствуют"); }
+                
+
+            }
+            else
+            {
+                for (int i = 0; i < allTest.Count; i++)
+                {
+                    var currentResult = allTest[i];
+                    cellRange = table.Cell(i + 2, 1).Range; cellRange.Text = currentResult.NameSurname;
+                    cellRange = table.Cell(i + 2, 2).Range; cellRange.Text = currentResult.Test.Title;
+                    cellRange = table.Cell(i + 2, 3).Range; cellRange.Text = currentResult.Time.ToString();
+                    cellRange = table.Cell(i + 2, 4).Range; cellRange.Text = currentResult.CorrectAnswers.ToString();
+                    cellRange = table.Cell(i + 2, 5).Range; cellRange.Text = currentResult.DateOfPassage.ToString();
+                }
             }
             application.Visible = true;
         }
@@ -94,9 +123,13 @@ namespace TextBook.Pages
         private void SearchResult()
         {
             var result = ConnectionClass.connection.TestResult.ToList();
+            if (cmbTest.SelectedIndex > 0)
+                result = result.Where(x => x.Test.Equals(cmbTest.SelectedItem as Test)).ToList();
             result = result.Where(x => x.Surname.ToLower().Contains(txbSearchSurname.Text.ToLower())).ToList();
             result = result.Where(x => x.Name.ToLower().Contains(txbSearchName.Text.ToLower())).ToList();
             dgInfoResult.ItemsSource = result;
         }
+
+        private void cmbTest_SelectionChanged(object sender, SelectionChangedEventArgs e) { SearchResult(); }
     }
 }

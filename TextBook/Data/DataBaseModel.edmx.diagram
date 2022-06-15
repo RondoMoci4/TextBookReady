@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4706cbf0659f4124bb41bc2f1e16b89f" Name="Diagram1">
-        <EntityTypeShape EntityType="DBTextBookModel.Autorization" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTextBookModel.Test" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTextBookModel.TestAnswer" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTextBookModel.TestQuestion" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBTextBookModel.TestResult" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+      <Diagram DiagramId="7e55347077524ce3a44179ad0912d4ee" Name="Diagram1">
+        <EntityTypeShape EntityType="DBTextBookModel.Autorization" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTextBookModel.ImageTheme" Width="1.5" PointX="8.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTextBookModel.Test" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTextBookModel.TestAnswer" Width="1.5" PointX="7.5" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTextBookModel.TestQuestion" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTextBookModel.TestResult" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTextBookModel.Theme" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBTextBookModel.TopicTest" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
         <AssociationConnector Association="DBTextBookModel.FK_Test_Autorization" ManuallyRouted="false" />
+        <AssociationConnector Association="DBTextBookModel.FK_ImageTheme_Theme" ManuallyRouted="false" />
         <AssociationConnector Association="DBTextBookModel.FK_TestQuestion_Test" ManuallyRouted="false" />
         <AssociationConnector Association="DBTextBookModel.FK_TestResult_Test" ManuallyRouted="false" />
+        <AssociationConnector Association="DBTextBookModel.FK_TopicTest_Test" ManuallyRouted="false" />
         <AssociationConnector Association="DBTextBookModel.FK_TestAnswer_TestQuestion" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DBTextBookModel.Theme" Width="1.5" PointX="6" PointY="7.875" />
-        <EntityTypeShape EntityType="DBTextBookModel.TopicTest" Width="1.5" PointX="8.25" PointY="3.875" />
-        <AssociationConnector Association="DBTextBookModel.FK_TopicTest_Test" />
-        <AssociationConnector Association="DBTextBookModel.FK_TopicTest_Theme" />
-        <EntityTypeShape EntityType="DBTextBookModel.ImageTheme" Width="1.5" PointX="8.25" PointY="8" />
-        <AssociationConnector Association="DBTextBookModel.FK_ImageTheme_Theme" />
+        <AssociationConnector Association="DBTextBookModel.FK_TopicTest_Theme" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

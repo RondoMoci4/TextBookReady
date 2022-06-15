@@ -23,11 +23,12 @@
             <FlowDocument>
                 <Paragraph x:Name="prTitle"
                            TextAlignment="Center"
-                           FontSize="18"
+                           FontSize="26"
                            Margin="20">
                 </Paragraph>
                 <Paragraph x:Name="prTheme"
-                           TextIndent="40">
+                           TextIndent="40"
+                           FontSize="24">
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

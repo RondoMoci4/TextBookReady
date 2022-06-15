@@ -351,7 +351,7 @@
                     Visibility="Hidden">
             <Image Width="250"
                Height="250"
-                   Source="/Image/1.jpg"
+                   Source="/Image/Нет_фото.png"
                    x:Name="imageQuestion"/>
             <StackPanel Margin="0,10,0,0"
                         Orientation="Horizontal"

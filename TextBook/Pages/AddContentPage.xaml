@@ -119,10 +119,11 @@
             <FlowDocument>
                 <Paragraph x:Name="prgTitleTheme"
                            TextAlignment="Center"
-                           FontSize="18"
+                           FontSize="26"
                            Foreground="{DynamicResource AdditionalColor}"/>
                 <Paragraph x:Name="prgTextTheme"
                            TextIndent="50"
+                           FontSize="24"
                            TextAlignment="Justify"/>
             </FlowDocument>
         </RichTextBox>
